@@ -11,7 +11,7 @@ $INSTALL_PATH="D:\Develop\test_tools\mockcpp-install"
 $global:USER_CHOICE=$null
 $global:SUPPORTED_COMPILER=$null
 
-. "$PSScriptRoot\..\..\..\tools\build_functions.ps1"
+. "$PSScriptRoot\tools\build_functions.ps1"
 
 # If no input parameter
 if (-not $args[0]) {

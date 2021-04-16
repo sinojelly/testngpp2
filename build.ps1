@@ -9,12 +9,12 @@
 $global:USER_CHOICE=$null
 $global:SUPPORTED_COMPILER=$null
 
-. "$PSScriptRoot\..\..\..\tools\build_functions.ps1"
+. "$PSScriptRoot\tools\build_functions.ps1"
 
 # If no input parameter
 if (-not $args[0]) {
     # Detect the compiler
-    cmake -B build ../../../tools
+    cmake -B build tools
     ReadUserChoice
 } else {
     $global:USER_CHOICE=$args[0] 

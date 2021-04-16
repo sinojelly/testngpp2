@@ -83,6 +83,7 @@ SET(UT_CASES ${UT_CASES} ${UT_CASES_WITH_MOCK})
 
 LINK_DIRECTORIES(
   ${CMAKE_BINARY_DIR}/../testngpp_testngppst/src
+  ${CMAKE_BINARY_DIR}/../testngpp_testngppst/src/runner
   ${CMAKE_BINARY_DIR}/../testngpp/src
   ${CMAKE_BINARY_DIR}/../testngpp/src/utils
   ${CMAKE_BINARY_DIR}/../testngpp/src/runner
@@ -122,6 +123,7 @@ FOREACH(CASE ${UT_CASES})
 
   TARGET_LINK_LIBRARIES(${CASE_MODULE}
     testngppst
+    testngppst-runner-lib
     testngpp-utils
     testngpp-static
     testngpp-runner-lib

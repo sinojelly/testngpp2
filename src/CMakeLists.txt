@@ -1,4 +1,4 @@
-INCLUDE(${PROJECT_SOURCE_DIR}/../../../tools/testngpp.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/tools/testngpp.cmake)
 
 IF(MSVC)
   ADD_DEFINITIONS( -D_CRT_SECURE_NO_WARNINGS )

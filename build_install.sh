@@ -10,7 +10,7 @@ set -e
 # Set the install path, should be absolute path
 INSTALL_PATH=~/test_tools/mockcpp_install
 
-. "../../../tools/build_functions.sh"
+. "tools/build_functions.sh"
 
 MY_OS_NAME=""
 MY_CXX_COMPILER_NAME=""

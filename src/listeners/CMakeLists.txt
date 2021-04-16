@@ -1,4 +1,4 @@
-INCLUDE(${PROJECT_SOURCE_DIR}/../../../tools/testngpp.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/tools/testngpp.cmake)
 
 ADD_DEFINITIONS(
     -DPACKAGE_NAME=${PACKAGE_NAME}

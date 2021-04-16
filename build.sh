@@ -11,7 +11,7 @@
 # fast fail
 set -e
 
-. "../../../tools/build_functions.sh"
+. "tools/build_functions.sh"
 
 MY_OS_NAME=""
 MY_CXX_COMPILER_NAME=""
