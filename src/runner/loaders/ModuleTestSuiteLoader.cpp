@@ -102,7 +102,7 @@ load( const StringList& searchingPaths
    typedef TestSuiteDesc* (*TestSuiteDescGetter)();
 
    TestSuiteDescGetter getter = (TestSuiteDescGetter) \
-       loader->findSymbol(nameGetter->getDescEntryName());
+       findSymbol(nameGetter->getDescEntryName());
 
    TestSuiteDesc* desc = getter();
    if(desc == 0)

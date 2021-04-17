@@ -175,6 +175,20 @@ namespace
    }
 }
 
+#include <windows.h>
+static void*
+findSymbol(const std::string& symbol)
+{
+    HMODULE handle = GetModuleHandle(NULL); //可执行文件的handle
+    void* ptr = (void*) GetProcAddress(handle, symbol.c_str());
+    if(ptr == 0)
+    {
+        throw Error("Can't find symbol " + symbol);
+    }
+
+    return ptr;
+}
+
 ///////////////////////////////////////////////////////////////
 void
 ModuleTestListenerLoaderImpl::
@@ -192,7 +206,7 @@ load( const StringList& searchingPaths
 						, int, char**);
 
    TestListenerCreater create = (TestListenerCreater) \
-       loader->findSymbol(getCreaterSymbolName(name));
+       findSymbol(getCreaterSymbolName(name));
 
    listener = create( resultReporter 
                     , suiteResultReporter
