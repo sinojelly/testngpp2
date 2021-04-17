@@ -126,9 +126,7 @@ FOREACH(CASE ${UT_CASES})
     testngppst
     testngppst-runner-lib
     testngppst-except
-    testngpp-utils
     testngpp-static
-    testngpp-runner-lib
     testngppxmllistener-fortest
     mockcpp)
 
