@@ -4,38 +4,11 @@
 #include <testngpp/runner/TestCaseRunnerFactory.h>
 #include <testngpp/runner/TestFixtureRunnerFactory.h>
 
-#if !defined(TESTNGPP_DISABLE_SANDBOX) || !TESTNGPP_DISABLE_SANDBOX
-#if defined(_MSC_VER) || defined(__MINGW32__)
-#include <testngpp/win32/Win32TestHierarchySandboxRunner.h>
-#else
-#include <testngpp/runner/TestHierarchySandboxRunner.h>
-#endif
-#endif
 
 TESTNGPP_NS_START
 
 namespace
 {
-
-#if !defined(TESTNGPP_DISABLE_SANDBOX) || !TESTNGPP_DISABLE_SANDBOX
-   TestFixtureRunner*
-   createSandboxInstance(unsigned int maxConcurrent)
-   {
-      if(maxConcurrent == 0)
-      {
-         maxConcurrent = 1;
-      }
-
-      return new TestFixtureRunner( 
-#if defined(_MSC_VER) || defined(__MINGW32__)
-		          new Win32TestHierarchySandboxRunner(
-#else
-		          new TestHierarchySandboxRunner( 
-#endif
-                     maxConcurrent, TestCaseRunnerFactory::createInstance()));
-   }
-#endif
-
    TestFixtureRunner*
    createSimpleInstance()
    {
@@ -51,12 +24,7 @@ TestFixtureRunner*
 TestFixtureRunnerFactory::
 createInstance(bool useSandbox, unsigned int maxConcurrent)
 {
-#if defined(TESTNGPP_DISABLE_SANDBOX) && TESTNGPP_DISABLE_SANDBOX
    return createSimpleInstance();
-#else
-   return useSandbox? createSandboxInstance(maxConcurrent) :
-      createSimpleInstance();
-#endif
 }
 
 ////////////////////////////////////////////////////////

@@ -18,7 +18,8 @@
 
 ## 任务
 - [x] 利用原来的编译脚本，把新的项目编译通过。
-- [ ] 简化CMakeList.txt, 直接添加cpp文件到一个CMakeList.txt。
+- [x] 简化CMakeList.txt, 直接添加cpp文件到一个CMakeList.txt。
+- [ ] 编译成可执行文件，运行看是否异常。
 - [ ] 确认ResourceCheckPoint是否还需要，不需要去掉。(可能检查文件关闭方面有用)
 - [ ] 确认Sandbox是否需要，不需要去掉。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。

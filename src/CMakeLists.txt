@@ -45,7 +45,7 @@ ENDIF(MSVC)
 ###############################
 # sources
 
-file(GLOB_RECURSE TESTNGPP_SRCS ./*.cpp)
+file(GLOB_RECURSE TESTNGPP_SRCS ./*.cpp ./*.c)
 
 ###############################
 # targets
@@ -55,3 +55,6 @@ ADD_LIBRARY(testngpp-static STATIC ${TESTNGPP_SRCS})
 INSTALL(
   TARGETS testngpp-static
   ARCHIVE DESTINATION testngpp/lib)
+
+
+ADD_EXECUTABLE(testngpp-runner ${TESTNGPP_SRCS}) 
