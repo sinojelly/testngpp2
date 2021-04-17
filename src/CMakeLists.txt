@@ -57,4 +57,4 @@ INSTALL(
   ARCHIVE DESTINATION testngpp/lib)
 
 
-ADD_EXECUTABLE(testngpp-runner ${TESTNGPP_SRCS}) 
+ADD_EXECUTABLE(testngpp-runner ${TESTNGPP_SRCS} ${CMAKE_SOURCE_DIR}/samples/sample.cpp) 

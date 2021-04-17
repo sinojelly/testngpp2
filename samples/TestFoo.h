@@ -1,14 +1,14 @@
 
 #include <testngpp/testngpp.hpp>
 
-FIXTURE(CFoo, 中文用例样例())
+FIXTURE(CFoo, 涓枃鐢ㄤ緥鏍蜂緥())
 {
-	TEST(中文())
+	TEST(涓枃())
 	{
 		INFO("yes");
 	}
 
-	TEST(测试: 1+1 = 2)
+	TEST(娴嬭瘯: 1+1 = 2)
 	{
 		ASSERT_EQ(2, 1+1);
 	}

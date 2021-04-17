@@ -166,10 +166,10 @@ int real_main(int argc, char* argv[])
 
    options.parse(argc, argv, "f:L:l:c:t:s:m");
 
-   if(options.args.size() == 0)
-   {
-      usage("testngpp-runner");
-   }
+   // if(options.args.size() == 0)
+   // {
+   //    usage("testngpp-runner");
+   // }
 
    //showOptions(options);
    
