@@ -1,8 +1,40 @@
-INCLUDE(${PROJECT_SOURCE_DIR}/tools/testngpp.cmake)
+
+###############################
+# definitions
+
+IF(UNIX OR MINGW)
+ADD_DEFINITIONS(
+    -g -ggdb
+)
+ENDIF(UNIX OR MINGW)
+
+IF(UNIX AND NOT CYGWIN)
+ADD_DEFINITIONS(
+    -fPIC
+)
+ENDIF(UNIX AND NOT CYGWIN)
+
+ADD_DEFINITIONS(-D__STDC_FORMAT_MACROS)
+
+IF(CMAKE_CL_64)
+    ADD_DEFINITIONS(-DWIN64)
+ENDIF(CMAKE_CL_64)
 
 IF(MSVC)
   ADD_DEFINITIONS( -D_CRT_SECURE_NO_WARNINGS )
 ENDIF(MSVC)
+
+
+###############################
+# includes
+
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty)
+IF(MSVC)
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include/msinttypes)
+ENDIF(MSVC)
+
+###############################
+# sources
 
 SET(TESTNGPP_SRCS
   except/Exception.cpp
@@ -21,54 +53,14 @@ SET(TESTNGPP_SRCS
   mem_checker/reporter.cpp
   mem_checker/check_status.cpp
   mem_checker/NoThrowsReporter.cpp
+  runner/ResourceCheckPoint.cpp
 )
 
-IF (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  # using regular Clang or AppleClang
-  SET(TESTNGPP_SRCS ${TESTNGPP_SRCS} runner/ResourceCheckPoint.cpp)
-ENDIF()
+###############################
+# targets
 
-# include debug info in testngpp.lib
-#IF(MSVC)
-#	ADD_DEFINITIONS( /Z7 )
-#ENDIF(MSVC)
+ADD_LIBRARY(testngpp-static STATIC ${TESTNGPP_SRCS})
 
-IF(WIN32)
-  ADD_LIBRARY(testngpp-static STATIC ${TESTNGPP_SRCS})
-ELSE(WIN32)  
-  ADD_LIBRARY(testngpp SHARED ${TESTNGPP_SRCS})
-  ADD_LIBRARY(testngpp-static STATIC ${TESTNGPP_SRCS})
-ENDIF(WIN32)
-
-IF(UNIX OR MINGW)
-ADD_DEFINITIONS(
-    -g -ggdb
-)
-ENDIF(UNIX OR MINGW)
-
-IF(UNIX AND NOT CYGWIN)
-ADD_DEFINITIONS(
-    -fPIC
-)
-ENDIF(UNIX AND NOT CYGWIN)
-
-# can not link to other lib in cmake 
-#TARGET_LINK_LIBRARIES(mem-checker)
-#LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src/mem_checker)
-
-ADD_DEFINITIONS(-D__STDC_FORMAT_MACROS)
-
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty)
-IF(MSVC)
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include/msinttypes)
-ENDIF(MSVC)
-
-IF(WIN32)
-  INSTALL(
-   TARGETS testngpp-static
-   ARCHIVE DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/lib)
-ELSE(WIN32)  
-  INSTALL(
-   TARGETS testngpp-static
-   ARCHIVE DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/lib)
-ENDIF(WIN32)
+INSTALL(
+  TARGETS testngpp-static
+  ARCHIVE DESTINATION testngpp/lib)

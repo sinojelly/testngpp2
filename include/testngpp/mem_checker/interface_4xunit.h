@@ -22,7 +22,7 @@
 #ifndef __INTERFACE_4XUNIT_H__
 #define __INTERFACE_4XUNIT_H__
 
-#include <mem_checker/reporter.h>
+#include <testngpp/mem_checker/reporter.h>
 
 
 #endif

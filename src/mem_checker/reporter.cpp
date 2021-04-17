@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
-#include <mem_checker/reporter.h>
+#include <testngpp/mem_checker/reporter.h>
 
 static mem_checker::Reporter *mem_checker_info_reporter = 0;
 static mem_checker::Reporter *mem_checker_failure_reporter = 0;

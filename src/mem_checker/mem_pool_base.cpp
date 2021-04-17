@@ -42,7 +42,7 @@
 #include <new>
 #endif
 
-#include <mem_checker/mem_pool_base.h>
+#include <testngpp/mem_checker/mem_pool_base.h>
 
 /* Defines macros to abstract system memory routines */
 # ifdef _MEM_POOL_USE_MALLOC

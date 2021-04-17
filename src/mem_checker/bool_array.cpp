@@ -38,7 +38,7 @@
 
 #include <limits.h>
 #include <string.h>
-#include <mem_checker/bool_array.h>
+#include <testngpp/mem_checker/bool_array.h>
 
 BYTE bool_array::_S_bit_count[256] =
 {

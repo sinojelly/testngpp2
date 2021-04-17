@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
-#include <mem_checker/reporter.h>
+#include <testngpp/mem_checker/reporter.h>
 
 void reportFailureNoThrows(const char *file, unsigned int line, const char *info)
 {

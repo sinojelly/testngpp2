@@ -2,7 +2,7 @@
 #include <testngpp/internal/TestCase.h>
 #include <testngpp/runner/loaders/ModuleLoader.h>
 
-#include <mem_checker/interface_4xunit.h>
+#include <testngpp/mem_checker/interface_4xunit.h>
 
 
 TESTNGPP_NS_START

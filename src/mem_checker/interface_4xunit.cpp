@@ -12,9 +12,9 @@
  *
  */
  
-#include <mem_checker/interface_4xunit.h>
-#include <mem_checker/reporter.h>
-#include <mem_checker/check_status.h>
+#include <testngpp/mem_checker/interface_4xunit.h>
+#include <testngpp/mem_checker/reporter.h>
+#include <testngpp/mem_checker/check_status.h>
 #include <testngpp/testngpp.h>
 
 extern int check_leaks();

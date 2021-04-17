@@ -48,12 +48,12 @@
 #ifdef _WIN32
 #include <malloc.h>
 #endif
-#include <mem_checker/fast_mutex.h>
-#include <mem_checker/static_assert.h>
-#include <mem_checker/interface_4xunit.h>
-#include <mem_checker/reporter.h>
-#include <mem_checker/format.h>
-#include <mem_checker/check_status.h>
+#include <testngpp/mem_checker/fast_mutex.h>
+#include <testngpp/mem_checker/static_assert.h>
+#include <testngpp/mem_checker/interface_4xunit.h>
+#include <testngpp/mem_checker/reporter.h>
+#include <testngpp/mem_checker/format.h>
+#include <testngpp/mem_checker/check_status.h>
 
 
 
@@ -197,7 +197,7 @@
  * is defined to \c 0 to disable the redefinition of \c new.
  */
 #define _DEBUG_NEW_REDEFINE_NEW 0
-#include <mem_checker/debug_new.h>
+#include <testngpp/mem_checker/debug_new.h>
 
 /**
  * Gets the aligned value of memory block size.

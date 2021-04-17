@@ -37,8 +37,8 @@
  */
 
 #include <algorithm>
-#include <mem_checker/cont_ptr_utils.h>
-#include <mem_checker/static_mem_pool.h>
+#include <testngpp/mem_checker/cont_ptr_utils.h>
+#include <testngpp/mem_checker/static_mem_pool.h>
 
 static_mem_pool_set::static_mem_pool_set()
 {
