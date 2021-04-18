@@ -36,7 +36,7 @@ def getUsageString(longOpts):
 ##########################################################
 def getOpt(longOpts, argv):
    try:
-      return getopt.getopt(argv, 'i:e:o:d:', getAssignableOptStrings(longOpts))
+      return getopt.getopt(argv, 'i:e:o:d:p:', getAssignableOptStrings(longOpts))
    except (getopt.GetoptError, err):
       print(str(err), file=sys.stderr)
       usage()
@@ -51,7 +51,7 @@ def usage():
    print("    or")
    print("    testngppgen", \
       getUsageString(longOpts), \
-      "[-e encoding] -d target_dir testcase1 testcase2 ...")
+      "[-e encoding] -d target_dir -p prefix testsuit.h")
 
 ##########################################################
 longOpts = []
@@ -109,6 +109,8 @@ def generate(argv):
 
    target_dir = None
 
+   prefix = None
+
    for o, a in optlist:
       if o == "-o":
          target = a
@@ -116,6 +118,8 @@ def generate(argv):
          encoding = a
       elif o == "-d":
          target_dir = a
+      elif o == "-p":
+         prefix = a
 
    inputEncoding = encoding
 
@@ -131,10 +135,12 @@ def generate(argv):
          absFixtures.append(h_file_path)
          h_file = os.path.basename(fixture)
          cpp_file = h_file.replace('.h', '.cpp')
+         if cpp_file == '':
+            continue
+         if prefix != None:
+            cpp_file = prefix + cpp_file
 
          theEnd = (fixtures == [])
-         if cpp_file == '':
-             continue
          cpp_file_path = processEndFile(target_dir, cpp_file, theEnd)
 
          if newerThan(cpp_file_path, h_file_path) and (not theEnd):
@@ -142,7 +148,7 @@ def generate(argv):
          else :
             output = output2file
 
-         process(cpp_file_path, absFixtures, inputEncoding, encoding, not theEnd)
+         process(cpp_file_path, absFixtures, inputEncoding, encoding, prefix, not theEnd)
       return
 
    if target == None:
