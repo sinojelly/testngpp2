@@ -2,7 +2,7 @@
 #include <string>
 
 static const std::vector<std::string> __testngpp_all_test_suites{
-    "sample"
+    "sample",
 };
 
 extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites() {

@@ -26,7 +26,8 @@
 - [ ] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
 - [ ] findSymbol重复，且不支持linux平台。需重构。
 - [ ] 修改python script在生成测试cpp的同时，生成所有测试列表的文件。
-  - [ ] python脚本 -d 指定生成文件所在目录，-o 指定文件名
+  - [x] python脚本 -d 指定生成文件所在目录
+  - [ ] 生成的 cpp 文件名, 增加前缀 prefix_，其中prefix可以用 -p prefix 选项指定。
   - [ ] 在-d 指定的目录生成 AllTestSuites.cpp 文件.
 - [ ] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
 - [ ] 用直接编译成可执行文件方式运行sample程序。
@@ -87,3 +88,23 @@ extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites() {
 }
 
 ```
+
+## 概念
+### Test Suites
+每个 TestXXX.h 自动生成 一个 ut-TestXXX.cpp，它就是一个 Test Suite.
+
+### 命令行
+```
+testngppgen [-e encoding] -d target_dir -p prefix testsuite1.h testsuite2.h ...
+```
+自动在 target_dir 生成:
+prefix_testsuit1.cpp
+prefix_testsuit2.cpp
+
+测试命令:
+python D:\Develop\projects\test_tools\testngpp2\scripts\testngppgen.py -e utf-8 -d D:\Develop\projects\test_tools\testngpp2\build_sample2 D:\Develop\projects\test_tools\testngpp2\samples\TestBar.h D:\Develop\projects\test_tools\testngpp2\samples\TestMemLeak.h
+发现这个命令会生成一个 TestMemLeak.cpp 和 TestBar.cxx，后者包含了两个.h的测试用例。
+为了避免多个suite合并，可以用 -d 参数指定目录，但是只传一个测试 .h 文件。
+
+### 注意事项:
+- test fixture表始终在item最后加一个0元素，避免数组元素个数是0的时候出错。
