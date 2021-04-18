@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <vector>
 #include <stdlib.h>
 #include <errno.h>
 
@@ -10,6 +11,8 @@
 #include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/internal/MemChecker.h>
+
+extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites();
 
 USING_TESTNGPP_NS
 
@@ -194,7 +197,10 @@ int real_main(int argc, char* argv[])
    
    std::string tagsFilterOption = getSingleOption("t", options, "*");
    StringList suites;
-   suites.add("sample");
+   const std::vector<std::string>& allSuites = ___testngpp_get_all_test_suites();
+   for (auto item : allSuites) {
+       suites.add(item);
+   }
    return TestRunner().runTests(useSandbox(options), maxConcurrent, suites, listeners
                          , searchingPathsOfListeners, fixtures, tagsFilterOption);
 }
