@@ -341,7 +341,7 @@ static TESTNGPP_NS::TestSuiteDesc test_suite_desc_instance_sample
 
 
 
-extern "C" DLL_EXPORT TESTNGPP_NS::TestSuiteDesc* ___testngpp_test_suite_desc_getter() {
+extern "C" DLL_EXPORT TESTNGPP_NS::TestSuiteDesc* ___testngpp_test_suite_desc_getter_sample() {
    return &test_suite_desc_instance_sample;
 }
 

@@ -446,8 +446,8 @@ def get_suite_desc_name(suite):
 def get_fixture_array_name(suite):
    return "array_of_fixture_desc_" + suite
 
-def get_suite_getter_name():
-   return "___testngpp_test_suite_desc_getter"
+def get_suite_getter_name(suite):
+   return "___testngpp_test_suite_desc_getter_" + suite
 
 ##########################################################
 dep_headers = [
@@ -534,7 +534,7 @@ class SuiteGenerator:
 
    #############################################
    def generate_suite_getter(self):
-      suite_getter = suite_getter_template % ( get_suite_getter_name(), get_suite_desc_name(self.suite))
+      suite_getter = suite_getter_template % ( get_suite_getter_name(self.suite), get_suite_desc_name(self.suite))
       output(suite_getter, self.file)
 
    #############################################

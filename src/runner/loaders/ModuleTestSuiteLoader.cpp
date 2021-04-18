@@ -29,8 +29,8 @@ struct ModuleTestSuiteLoaderImpl
 
    void unload();
 
-   std::string getDescEntryName() const
-   { return "___testngpp_test_suite_desc_getter"; }
+   std::string getDescEntryName(const std::string& suite) const
+   { return "___testngpp_test_suite_desc_getter_" + suite; }
 
    ModuleLoader* loader; // Y
 };
@@ -102,7 +102,7 @@ load( const StringList& searchingPaths
    typedef TestSuiteDesc* (*TestSuiteDescGetter)();
 
    TestSuiteDescGetter getter = (TestSuiteDescGetter) \
-       findSymbol(nameGetter->getDescEntryName());
+       findSymbol(nameGetter->getDescEntryName(path));
 
    TestSuiteDesc* desc = getter();
    if(desc == 0)

@@ -31,7 +31,7 @@ TESTNGPP_NS_START
 /////////////////////////////////////////////////////////////////
 namespace
 {
-   const std::string testngppTestSuiteDescGetter("___testngpp_test_suite_desc_getter");
+   const std::string testngppTestSuiteDescGetter("___testngpp_test_suite_desc_getter_");
 }
 
 /////////////////////////////////////////////////////////////////
@@ -48,8 +48,8 @@ struct TestSuiteContextImpl
 
    ~TestSuiteContextImpl();
 
-   std::string getDescEntryName() const
-   { return testngppTestSuiteDescGetter; }
+   std::string getDescEntryName(const std::string& suite) const
+   { return testngppTestSuiteDescGetter + suite; }
 
 private:
 

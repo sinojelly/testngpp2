@@ -21,6 +21,9 @@
 - [x] 利用原来的编译脚本，把新的项目编译通过。
 - [x] 简化CMakeList.txt, 直接添加cpp文件到一个CMakeList.txt。
 - [x] 编译成可执行文件，运行看是否异常。
+- [x] 带上-l listener参数，可以打印信息; 带上 test dll 路径(正确与否随意)，可以找到已编译进exe的__testngpp_test_suite_desc_getter函数，从而读取编译进exe的唯一的testsuite并运行它。
+- [ ] 增加一个全局选项，替代掉 -l listener 以及它的参数。
+- [ ] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
 - [ ] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
 - [ ] 用直接编译成可执行文件方式运行sample程序。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。

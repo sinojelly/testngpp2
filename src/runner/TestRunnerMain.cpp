@@ -193,8 +193,9 @@ int real_main(int argc, char* argv[])
    }
    
    std::string tagsFilterOption = getSingleOption("t", options, "*");
-                                                 
-   return TestRunner().runTests(useSandbox(options), maxConcurrent, options.args, listeners
+   StringList suites;
+   suites.add("sample");
+   return TestRunner().runTests(useSandbox(options), maxConcurrent, suites, listeners
                          , searchingPathsOfListeners, fixtures, tagsFilterOption);
 }
 
