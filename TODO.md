@@ -91,22 +91,23 @@ extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites() {
 
 ## 概念
 ### Test Suites
-每个 TestXXX.h 自动生成 一个 ut-TestXXX.cpp，它就是一个 Test Suite.
+每个 TestXXX.h 自动生成 一个 ut_TestXXX.cxx，它就是一个 Test Suite.
 
 ### 命令行
 ```
-testngppgen [-e encoding] -d target_dir -p prefix testsuite1.h testsuite2.h ...
+testngppgen [-e encoding] -d target_dir -p prefix testsuite1.h
 ```
 自动在 target_dir 生成:
 prefix_testsuit1.cpp
-prefix_testsuit2.cpp
 
 测试命令:
 python D:\Develop\projects\test_tools\testngpp2\scripts\testngppgen.py -e utf-8 -d D:\Develop\projects\test_tools\testngpp2\build_sample2 D:\Develop\projects\test_tools\testngpp2\samples\TestBar.h D:\Develop\projects\test_tools\testngpp2\samples\TestMemLeak.h
 发现这个命令会生成一个 TestMemLeak.cpp 和 TestBar.cxx，后者包含了两个.h的测试用例。(.cxx是汇总所有suite的文件,只有它导出了___testngpp_test_suite_desc_getter_TestMemLeak)
 为了避免多个suite合并，可以用 -d 参数指定目录，但是只传一个测试 .h 文件。它会自动生成一个cxx文件，导出的符号带有suite name。
 还需要考虑如何把 prefix 加上去。加到 suite name里面。
-并且把 suite name 加到 AllTestSuite 列表，如果该列表有更新，则写文件，否则不写文件。
+并且把 suite name 加到 AllTestSuites 列表，如果该列表有更新，则写文件，否则不写文件。
+
+prefix 需要能成为 c++ 的标识符，可以用字母和下划线。
 
 ### 注意事项:
 - test fixture表始终在item最后加一个0元素，避免数组元素个数是0的时候出错。
