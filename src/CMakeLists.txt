@@ -46,6 +46,7 @@ ENDIF(MSVC)
 # sources
 
 file(GLOB_RECURSE TESTNGPP_SRCS ./*.cpp ./*.c)
+file(GLOB_RECURSE TESTSUITE_SRCS ${CMAKE_SOURCE_DIR}/build_sample2/*.cxx)
 
 ###############################
 # targets
@@ -57,7 +58,4 @@ INSTALL(
   ARCHIVE DESTINATION testngpp/lib)
 
 
-ADD_EXECUTABLE(testngpp-runner ${TESTNGPP_SRCS}
- ${CMAKE_SOURCE_DIR}/samples/sample.cpp
- ${CMAKE_SOURCE_DIR}/samples/AllTestSuites.cpp
- ) 
+ADD_EXECUTABLE(testngpp-runner ${TESTNGPP_SRCS} ${TESTSUITE_SRCS}) 
