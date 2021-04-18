@@ -562,31 +562,54 @@ class SuiteGenerator:
       self.insert_into_suite_list()
 
    def insert_into_suite_list(self):
+      suit_list_file = None
       try:
          suit_list_file_path = os.path.join(self.target_dir, "AllTestSuites.cxx")
          suit_list_exists = os.path.exists(suit_list_file_path)
-         suit_list_file = codecs.open(suit_list_file_path, mode="w", encoding='utf-8')
-         modified, lines = self.read_suite_list(suit_list_exists, suit_list_file, self.suite)
+
+         # 先读取原有文件内容
+         temp_file = None
+         old_suit_list_content = []
+         if suit_list_exists:
+            try:
+               temp_file = codecs.open(suit_list_file_path, mode="r", encoding='utf-8')
+               old_suit_list_content = temp_file.readlines()
+            except IOError:
+               print("Read AllTestSuites.cxx fail.")
+            finally:
+               if temp_file != None:
+                   temp_file.close()
+
+         # 插入新的suite
+         modified, lines = self.insert_suite_item(old_suit_list_content, self.suite)
          if modified:
-             suit_list_file.writelines(lines)
+            suit_list_file = codecs.open(suit_list_file_path, mode="w", encoding='utf-8')
+            suit_list_file.writelines(lines)
       except IOError:
          print("write", suit_list_file_path, "failed", file=sys.stderr)
          sys.exit(1)
       finally:
-         suit_list_file.close()
+         if suit_list_file != None:
+             suit_list_file.close()
 
-   def read_suite_list(self, suit_list_file_exists, suit_list_file, insert_suite):
+   def insert_suite_item(self, old_suit_list_content, insert_suite):
       modified = False
       lines = []
-      if suit_list_file_exists:
-         try:
-            lines = suit_list_file.readlines()
-         except IOError:
-            print("Read AllTestSuites.cxx fail.")
-      if lines == []: # 没有内容
+      insert_suite_content = "\""+insert_suite+"\",\n"
+      if old_suit_list_content == []: # 没有内容
          lines = self.get_default_all_suit_list_content()
-         lines.insert(4, "\""+insert_suite+"\",\n")
+         lines.insert(4, insert_suite_content)
          modified = True
+      else:
+         found = False
+         lines = old_suit_list_content
+         for line in lines:
+            if line == insert_suite_content:
+               found = True
+               break
+         if not found:
+            lines.insert(4, insert_suite_content)
+            modified = True
       return modified, lines
 
    def get_default_all_suit_list_content(self):

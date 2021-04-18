@@ -29,7 +29,8 @@
   - [x] python脚本 -d 指定生成文件所在目录
   - [ ] 生成的 cpp 文件名, 增加前缀 prefix_，其中prefix可以用 -p prefix 选项指定。
   - [ ] 在-d 指定的目录生成 AllTestSuites.cpp 文件.
-- [ ] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
+- [x] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
+- [ ] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。
 - [ ] 用直接编译成可执行文件方式运行sample程序。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
 - [ ] 先改testngpp所有cpp链接成一个.a，作为被测对象。
