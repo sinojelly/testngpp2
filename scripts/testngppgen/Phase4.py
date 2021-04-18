@@ -491,6 +491,7 @@ class SuiteGenerator:
       self.fixture_files = fixture_files
       self.recordFixture = recordFixture
       self.target = target
+      self.target_dir = os.path.dirname(target)
 
    #############################################
    def generate_fixtures(self):
@@ -560,6 +561,18 @@ class SuiteGenerator:
       self.generate_suite_desc()
       if not self.recordFixture :
           self.generate_suite_getter()
+      self.insert_into_suite_list()
+
+   def insert_into_suite_list(self):
+      try:
+         suit_list_file_path = os.path.join(self.target_dir, "AllTestSuites.cxx")
+         suit_list_file = codecs.open(suit_list_file_path, mode="w", encoding='utf-8')
+         suit_list_file.writelines(self.suite)
+      except IOError:
+         print("write", suit_list_file_path, "failed", file=sys.stderr)
+         sys.exit(1)
+      finally:
+         suit_list_file.close()
 
 ################################################
 def verify_testcase_deps(scopes):
