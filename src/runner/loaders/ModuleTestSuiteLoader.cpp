@@ -52,35 +52,6 @@ ModuleTestSuiteLoaderImpl::~ModuleTestSuiteLoaderImpl()
 }
 
 ///////////////////////////////////////////////////////////////
-// unix
-//#include <dlfcn.h>
-// static void*
-// findSymbol(const std::string& symbol)
-// {
-//     void* ptr = (void*) ::dlsym(RTLD_DEFAULT, symbol.c_str());
-//     if(ptr == 0)
-//     {
-//         throw Error(::dlerror());
-//     }
-
-//     return ptr;
-// }
-
-#include <windows.h>
-static void*
-findSymbol(const std::string& symbol)
-{
-    HMODULE handle = GetModuleHandle(NULL); //可执行文件的handle
-    void* ptr = (void*) GetProcAddress(handle, symbol.c_str());
-    if(ptr == 0)
-    {
-        throw Error("Can't find symbol " + symbol);
-    }
-
-    return ptr;
-}
-
-///////////////////////////////////////////////////////////////
 TestSuiteDesc*
 ModuleTestSuiteLoaderImpl::
 load( const StringList& searchingPaths
@@ -102,7 +73,7 @@ load( const StringList& searchingPaths
    typedef TestSuiteDesc* (*TestSuiteDescGetter)();
 
    TestSuiteDescGetter getter = (TestSuiteDescGetter) \
-       findSymbol(nameGetter->getDescEntryName(path));
+       loader->findSymbol(nameGetter->getDescEntryName(path));
 
    TestSuiteDesc* desc = getter();
    if(desc == 0)

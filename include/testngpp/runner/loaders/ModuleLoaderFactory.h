@@ -1,6 +1,6 @@
 
-#ifndef __TESTNGPP_MODULE_LOADER_FACTORY_H
-#define __TESTNGPP_MODULE_LOADER_FACTORY_H
+#ifndef __TESTNGPP_EMPTY_MODULE_LOADER_FACTORY_H
+#define __TESTNGPP_EMPTY_MODULE_LOADER_FACTORY_H
 
 #include <testngpp/testngpp.h>
 #include <testngpp/runner/loaders/ModuleLoader.h>
@@ -14,7 +14,7 @@ struct EmptyModuleLoader : public ModuleLoader
 
    void unload(){}
 
-   void* findSymbol(const std::string& symbol){ return nullptr; }
+   void* findSymbol(const std::string& symbol);
 };
 
 struct ModuleLoaderFactory
