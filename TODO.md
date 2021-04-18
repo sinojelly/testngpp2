@@ -23,19 +23,19 @@
 - [x] 编译成可执行文件，运行看是否异常。
 - [x] 带上-l listener参数，可以打印信息; 带上 test dll 路径(正确与否随意)，可以找到已编译进exe的__testngpp_test_suite_desc_getter函数，从而读取编译进exe的唯一的testsuite并运行它。
 - [ ] 增加一个全局选项，替代掉 -l listener 以及它的参数。
-- [ ] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
+- [x] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
 - [ ] findSymbol重复，且不支持linux平台。需重构。
-- [ ] 修改python script在生成测试cpp的同时，生成所有测试列表的文件。
+- [x] 修改python script在生成测试cpp的同时，生成所有测试列表的文件。
   - [x] python脚本 -d 指定生成文件所在目录
-  - [ ] 生成的 cpp 文件名, 增加前缀 prefix_，其中prefix可以用 -p prefix 选项指定。
-  - [ ] 在-d 指定的目录生成 AllTestSuites.cpp 文件.
+  - [x] 生成的 cpp 文件名, 增加前缀 prefix_，其中prefix可以用 -p prefix 选项指定。
+  - [x] 在-d 指定的目录生成 AllTestSuites.cpp 文件.
 - [x] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
 - [ ] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。
-- [ ] 用直接编译成可执行文件方式运行sample程序。
+- [x] 用直接编译成可执行文件方式运行sample程序。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
-- [ ] 先改testngpp所有cpp链接成一个.a，作为被测对象。
-- [ ] 然后改 testngppst 支持编译成一个可执行文件，从而运行测试。
-- [ ] 重构目录，把不同平台对应的实现分开。便于在构建脚本中管理。
+- [x] 先改testngpp所有cpp链接成一个.a，作为被测对象。
+- [x] 然后改 testngppst 支持编译成一个可执行文件，从而运行测试。
+- [x] 重构目录，把不同平台对应的实现分开。便于在构建脚本中管理。(不同平台差异较小，估计不需要改多少)
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 支持BDD类型的测试。
 
@@ -110,5 +110,7 @@ python D:\Develop\projects\test_tools\testngpp2\scripts\testngppgen.py -e utf-8 
 
 prefix 需要能成为 c++ 的标识符，可以用字母和下划线。
 
+python.exe D:/Develop/test_tools/testngpp2/scripts/testngppgen.py -d D:/Develop/test_tools/testngpp2/gen_testsuites -p ut_ D:/Develop/test_tools/testngpp2/samples/TestBar.h
+
 ### 注意事项:
-- test fixture表始终在item最后加一个0元素，避免数组元素个数是0的时候出错。
+- test fixture表始终在item最后加一个0元素，避免数组元素个数是0的时候出错。我们用vector则不存在此问题，而且构造时初始化参数，不用一个一个add。新的c++真的好用很多。
