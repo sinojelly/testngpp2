@@ -24,6 +24,8 @@
 - [x] 带上-l listener参数，可以打印信息; 带上 test dll 路径(正确与否随意)，可以找到已编译进exe的__testngpp_test_suite_desc_getter函数，从而读取编译进exe的唯一的testsuite并运行它。
 - [ ] 增加一个全局选项，替代掉 -l listener 以及它的参数。
 - [ ] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
+- [ ] findSymbol重复，且不支持linux平台。需重构。
+- [ ] 修改python script在生成测试cpp的同时，生成所有测试列表的文件。
 - [ ] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
 - [ ] 用直接编译成可执行文件方式运行sample程序。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
@@ -35,3 +37,35 @@
 
 - [x] 确认ResourceCheckPoint是否还需要，不需要去掉。(可能检查文件关闭方面有用)
 - [x] 确认Sandbox是否需要，不需要去掉。
+
+## 调试脚本
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(Windows) 启动",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/src/Debug/testngpp-runner.exe",
+            "args": ["${workspaceFolder}/build/src/Debug/mockcpp-ut-TestAny.dll", "-l\"testngppstdoutlistener -c -v\"", "-m"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "externalTerminal"
+        },
+        {
+            "name": "Python: 当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "-e", "utf-8",
+                "-o", "D:/Develop/test_tools/testngpp2/build_sample/sample.cpp",
+                "D:/Develop/test_tools/testngpp2/samples/TestFoo.h"
+            ]
+        }
+    ]
+}
+```
