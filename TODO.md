@@ -18,27 +18,29 @@
 - 编译所有 cpp 测试文件 并链接 libtestngpp.a 生成一个测试文件。
 
 ## 任务
+- [ ] 增加一个全局选项，替代掉 -l listener 以及它的参数。
+- [ ] findSymbol重复，且不支持linux平台。需重构。
+- [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
+- [ ] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。
+- [ ] 增加到cmakelist的自动生成testsuites cxx文件的命令，可能不能正常工作。(如果文件已存在才能工作)
+- [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
+
+- [ ] 支持BDD类型的测试。
+
 - [x] 利用原来的编译脚本，把新的项目编译通过。
 - [x] 简化CMakeList.txt, 直接添加cpp文件到一个CMakeList.txt。
 - [x] 编译成可执行文件，运行看是否异常。
 - [x] 带上-l listener参数，可以打印信息; 带上 test dll 路径(正确与否随意)，可以找到已编译进exe的__testngpp_test_suite_desc_getter函数，从而读取编译进exe的唯一的testsuite并运行它。
-- [ ] 增加一个全局选项，替代掉 -l listener 以及它的参数。
 - [x] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
-- [ ] findSymbol重复，且不支持linux平台。需重构。
 - [x] 修改python script在生成测试cpp的同时，生成所有测试列表的文件。
   - [x] python脚本 -d 指定生成文件所在目录
   - [x] 生成的 cpp 文件名, 增加前缀 prefix_，其中prefix可以用 -p prefix 选项指定。
   - [x] 在-d 指定的目录生成 AllTestSuites.cpp 文件.
 - [x] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
-- [ ] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。
 - [x] 用直接编译成可执行文件方式运行sample程序。
-- [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
 - [x] 先改testngpp所有cpp链接成一个.a，作为被测对象。
 - [x] 然后改 testngppst 支持编译成一个可执行文件，从而运行测试。
 - [x] 重构目录，把不同平台对应的实现分开。便于在构建脚本中管理。(不同平台差异较小，估计不需要改多少)
-- [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
-- [ ] 支持BDD类型的测试。
-
 - [x] 确认ResourceCheckPoint是否还需要，不需要去掉。(可能检查文件关闭方面有用)
 - [x] 确认Sandbox是否需要，不需要去掉。
 
