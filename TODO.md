@@ -103,8 +103,10 @@ prefix_testsuit2.cpp
 
 测试命令:
 python D:\Develop\projects\test_tools\testngpp2\scripts\testngppgen.py -e utf-8 -d D:\Develop\projects\test_tools\testngpp2\build_sample2 D:\Develop\projects\test_tools\testngpp2\samples\TestBar.h D:\Develop\projects\test_tools\testngpp2\samples\TestMemLeak.h
-发现这个命令会生成一个 TestMemLeak.cpp 和 TestBar.cxx，后者包含了两个.h的测试用例。
-为了避免多个suite合并，可以用 -d 参数指定目录，但是只传一个测试 .h 文件。
+发现这个命令会生成一个 TestMemLeak.cpp 和 TestBar.cxx，后者包含了两个.h的测试用例。(.cxx是汇总所有suite的文件,只有它导出了___testngpp_test_suite_desc_getter_TestMemLeak)
+为了避免多个suite合并，可以用 -d 参数指定目录，但是只传一个测试 .h 文件。它会自动生成一个cxx文件，导出的符号带有suite name。
+还需要考虑如何把 prefix 加上去。加到 suite name里面。
+并且把 suite name 加到 AllTestSuite 列表，如果该列表有更新，则写文件，否则不写文件。
 
 ### 注意事项:
 - test fixture表始终在item最后加一个0元素，避免数组元素个数是0的时候出错。
