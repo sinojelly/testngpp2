@@ -26,6 +26,8 @@
 - [ ] 把所有测试cpp文件编译进exe，并且把它们的suite名称(cpp文件名)注册到一个表。
 - [ ] findSymbol重复，且不支持linux平台。需重构。
 - [ ] 修改python script在生成测试cpp的同时，生成所有测试列表的文件。
+  - [ ] python脚本 -d 指定生成文件所在目录，-o 指定文件名
+  - [ ] 在-d 指定的目录生成 AllTestSuites.cpp 文件.
 - [ ] 研究用例运行的触发机制，之前通过load so触发，现在要自动把用例列表弄出来。原来通过命令行参数中的每个suite so加载触发用例运行。
 - [ ] 用直接编译成可执行文件方式运行sample程序。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
@@ -68,4 +70,20 @@
         }
     ]
 }
+```
+
+## AllTestSuites.cpp 内容
+
+```
+#include <vector>
+#include <string>
+
+static const std::vector<std::string> __testngpp_all_test_suites{
+    "sample"
+};
+
+extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites() {
+   return __testngpp_all_test_suites;
+}
+
 ```
