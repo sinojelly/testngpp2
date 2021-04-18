@@ -148,7 +148,7 @@ def generate(argv):
          else :
             output = output2file
 
-         process(cpp_file_path, absFixtures, inputEncoding, encoding, prefix, not theEnd)
+         process(cpp_file_path, absFixtures, inputEncoding, encoding, not theEnd)
       return
 
    if target == None:

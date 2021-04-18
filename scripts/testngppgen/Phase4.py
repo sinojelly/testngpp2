@@ -482,11 +482,9 @@ extern "C" DLL_EXPORT TESTNGPP_NS::TestSuiteDesc* %s() {
 ################################################
 class SuiteGenerator:
    #############################################
-   def __init__(self, scopes, file, target, fixture_files, prefix = None, recordFixture = False):
+   def __init__(self, scopes, file, target, fixture_files, recordFixture = False):
       self.scopes = scopes
       self.suite = get_base_name(target)
-      if prefix != None:
-         self.suite = prefix + self.suite
       self.file = file
       self.fixture_files = fixture_files
       self.recordFixture = recordFixture
@@ -580,7 +578,7 @@ def verify_testcase_deps(scopes):
          .generate(lambda file, elem: TestCaseSeeker(elem) )
 
 ################################################
-def phase4(fixture_files, target, scopes, encoding, prefix = None, recordFixture = False):
+def phase4(fixture_files, target, scopes, encoding, recordFixture = False):
    verify_testcase_deps(scopes)
 
    file = None
@@ -596,7 +594,7 @@ def phase4(fixture_files, target, scopes, encoding, prefix = None, recordFixture
    global output_encoding
    output_encoding = encoding
 
-   SuiteGenerator(scopes, file, target, fixture_files, prefix, recordFixture).generate()
+   SuiteGenerator(scopes, file, target, fixture_files, recordFixture).generate()
 
    if file != None :
       file.close()
