@@ -97,6 +97,34 @@ extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites() {
 每个 TestXXX.h 自动生成 一个 ut_TestXXX.cxx，它就是一个 Test Suite.
 
 ### 命令行
+#### testngpp runner命令行参数
+```
+testngpp-runner.exe [options]
+
+Use options to show this help list:
+   -h                        : show this help list
+
+Use options to control output:
+   -o stdout[-c-s-f-t-v-l3]  : output to standard output
+or
+   -o xml:path/to/file       : output to specified xml file
+The meanings of stdout sub-options are:
+   -c                        : colourful
+   -s                        : show suite name
+   -f                        : show suite name and fixture name
+   -t                        : show tags
+   -v                        : show verbose info
+   -l level                  : set output level (0 ~ 3)
+The default output is: -o stdout-c-v. 
+
+Use options to control running testcase scope:
+   -f pattern                : filter patterns 
+   -t pattern                : tags filter pattern
+
+Use options to control function:
+   -m                        : not use memory leak checker
+```
+#### testngppgen命令行参数:
 ```
 testngppgen [-e encoding] -d target_dir -p prefix testsuite1.h
 ```

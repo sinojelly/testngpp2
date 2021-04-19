@@ -42,6 +42,36 @@ void usage(const char * program)
    exit(1);
 }
 
+void usage2(const char * program)
+{
+   std::cerr << "usage:" << std::endl << 
+   program << " [options]" << std::endl <<
+   "" << std::endl <<
+   "Use options to show this help list:" << std::endl <<
+   "   -h                        : show this help list" << std::endl <<
+   "" << std::endl <<
+   "Use options to control output:" << std::endl <<
+   "   -o stdout[-c-s-f-t-v-l3]  : output to standard output" << std::endl <<
+   "or" << std::endl <<
+   "   -o xml:path/to/file       : output to specified xml file" << std::endl <<
+   "The meanings of stdout sub-options are:" << std::endl <<
+   "   -c                        : colourful" << std::endl <<
+   "   -s                        : show suite name" << std::endl <<
+   "   -f                        : show suite name and fixture name" << std::endl <<
+   "   -t                        : show tags" << std::endl <<
+   "   -v                        : show verbose info" << std::endl <<
+   "   -l level                  : set output level (0 ~ 3)" << std::endl <<
+   "The default output is: -o stdout-c-v. " << std::endl <<
+   "" << std::endl <<
+   "Use options to control running testcase scope:" << std::endl <<
+   "   -f pattern                : filter patterns" << std::endl <<
+   "   -t pattern                : tags filter pattern" << std::endl <<
+   "" << std::endl <<
+   "Use options to control function:" << std::endl <<
+   "   -m                        : not use memory leak checker" << std::endl <<
+   std::endl;
+}
+
 #if 0
 ////////////////////////////////////////////////////////////
 static 
