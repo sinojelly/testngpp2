@@ -18,7 +18,12 @@
 - 编译所有 cpp 测试文件 并链接 libtestngpp.a 生成一个测试文件。
 
 ## 任务
-- [ ] 增加一个全局选项，替代掉 -l listener 以及它的参数。
+- [x] Listener的类型和选项未传入。
+- [x] listener相关参数均为空。
+- [ ] xml output未支持。
+- [ ] filter fixtures 可能不支持多个 -f 选项.
+- [x] filter tags 需要测试.
+- [x] 增加一个全局选项，替代掉 -l listener 以及它的参数。
 - [x] findSymbol重复，且不支持linux平台。需重构。
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。

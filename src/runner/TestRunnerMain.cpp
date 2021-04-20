@@ -12,226 +12,114 @@
 
 #include <testngpp/internal/MemChecker.h>
 
+#include "clipp.h"
+using namespace clipp;
+
 extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites();
 
 USING_TESTNGPP_NS
 
 ////////////////////////////////////////////////////////////
-void usage(const char * program)
-{
-   std::cerr << "usage: " 
-             << program 
-             << " [options] testsuites ..." 
-             << std::endl
-             << std::endl
-             << "   -l listener      register test listener"
-             << std::endl
-             << "   -L path          listener searching path"
-             << std::endl
-             << "   -f pattern       filter patterns "
-             << std::endl
-             << "   -t pattern       tags filter pattern"
-             << std::endl
-             << "   -c number        maximum # of concurrent sandboxes"
-             << std::endl
-             << "   -s               using sandbox runner"
-             << std::endl
-             << "   -m               not checking memory leakage"
-             << std::endl
-             << std::endl;
-   exit(1);
-}
+struct Options{
+    // Testcase Selection
+    std::string filterFixtures="";
+    std::string filterTags="*";
 
-void usage2(const char * program)
-{
-   std::cerr << "usage:" << std::endl << 
-   program << " [options]" << std::endl <<
-   "" << std::endl <<
-   "Use options to show this help list:" << std::endl <<
-   "   -h                        : show this help list" << std::endl <<
-   "" << std::endl <<
-   "Use options to control output:" << std::endl <<
-   "   -o stdout[-c-s-f-t-v-l3]  : output to standard output" << std::endl <<
-   "or" << std::endl <<
-   "   -o xml:path/to/file       : output to specified xml file" << std::endl <<
-   "The meanings of stdout sub-options are:" << std::endl <<
-   "   -c                        : colourful" << std::endl <<
-   "   -s                        : show suite name" << std::endl <<
-   "   -f                        : show suite name and fixture name" << std::endl <<
-   "   -t                        : show tags" << std::endl <<
-   "   -v                        : show verbose info" << std::endl <<
-   "   -l level                  : set output level (0 ~ 3)" << std::endl <<
-   "The default output is: -o stdout-c-v. " << std::endl <<
-   "" << std::endl <<
-   "Use options to control running testcase scope:" << std::endl <<
-   "   -f pattern                : filter patterns" << std::endl <<
-   "   -t pattern                : tags filter pattern" << std::endl <<
-   "" << std::endl <<
-   "Use options to control function:" << std::endl <<
-   "   -m                        : not use memory leak checker" << std::endl <<
-   std::endl;
-}
+    // Output Configuration
+    std::string output="stdout";
+    bool colourful = true;
+    bool showSuite = false;
+    bool showFixture = false;
+    bool showTags = false;
+    bool verbose = true;
+    int outputLevel = 0;
 
-#if 0
-////////////////////////////////////////////////////////////
-static 
-void showOptions(const OptionList& options)
-{
-   OptionList::Options::const_iterator i = options.options.begin();
-   for(; i != options.options.end(); i++)
-   {
-      std::cout << "(" << i->first 
-                << "," << i->second 
-                << ")" << std::endl;
-   }
+    // Execution Configuration 
+    bool memCheck = false;
+}options;
+
+void parse_args(int argc, char* argv[]) {
+    auto cli = (
+        option("--filter-fixtures") & value("filter fixtures", options.filterFixtures),
+        option("--filter-tags") & value("filter tags", options.filterTags),
+        option("-o", "--output") & value("output", options.output) 
+           & option("-c").set(options.colourful) & option("-s").set(options.showSuite)
+           & option("-f").set(options.showFixture) & option("-t").set(options.showTags) 
+           & option("-v").set(options.verbose) & (option("-l") & value("output level", options.outputLevel)),
+        option("-m", "--no-memcheck").set(options.memCheck)
+    );
+
+    if (!parse(argc, argv, cli)) {
+        std::cout << make_man_page(cli, argv[0]);
+        exit(1);
+    }
 }
-#endif
 
 ////////////////////////////////////////////////////////////
 static
-void getSpecifiedOptions( const std::string& option
-                        , StringList& results
-                        , OptionList& options)
+void getSpecifiedFixtures( StringList& fixtures)
 {
-   OptionList::Options::const_iterator i = options.options.begin();
-   for(; i != options.options.end(); i++)
-   {
-      if(i->first == option && i->second.size() > 0)
-      {
-         results.add(i->second);
+   fixtures.add(options.filterFixtures);
+}
+
+////////////////////////////////////////////////////////////
+static
+bool useMemChecker()
+{
+   return !options.memCheck;
+}
+
+////////////////////////////////////////////////////////////
+static
+void getListenerOptions(StringList& list) 
+{
+   if (options.output == "stdout") {
+      std::string listener = "testngppstdoutlistener";
+      if (options.colourful) {
+         listener = listener + " -c";
       }
-   }
-}
-
-////////////////////////////////////////////////////////////
-static 
-std::string getSingleOption(const std::string& option
-                        , OptionList& options
-                        , const std::string& defaultValue)
-{
-   OptionList::Options::const_iterator i = options.options.begin();
-   for(; i != options.options.end(); i++)
-   {
-      if(i->first == option && i->second.size() > 0)
-      {
-         return i->second;
+      if (options.showSuite) {
+         listener = listener + " -s";
       }
+      if (options.showFixture) {
+         listener = listener + " -f";
+      }
+      if (options.showTags) {
+         listener = listener + " -t";
+      }
+      if (options.verbose) {
+         listener = listener + " -v";
+      }
+      if (options.outputLevel != 0) {
+         listener = listener + " -l " + std::to_string(options.outputLevel);
+      }
+      list.add(listener);
    }
-
-   return defaultValue;
 }
-
-////////////////////////////////////////////////////////////
-static
-bool getFlagOption(const std::string& flag, OptionList& options)
-{
-   OptionList::Options::const_iterator i = options.options.begin();
-   for(; i != options.options.end(); i++)
-   {
-      if(i->first == flag)
-         return true;
-   }
-
-   return false;
-}
-////////////////////////////////////////////////////////////
-static 
-unsigned int getMaxConcurrent(OptionList& options)
-{
-   std::string s = getSingleOption("c", options, "1");
-   errno = 0;
-   int result = ::strtol(s.c_str(),0,10);
-   if(result < 0 || (result == 0 && errno == ERANGE))
-   {
-       std::cerr << "error: invalid value of option -c : " 
-                 << s << std::endl;
-       exit(1);
-   }
-
-   std::cout << "maximum # of sandboxes = " << result << std::endl;
-
-   return result;
-}
-
-////////////////////////////////////////////////////////////
-static
-void getListeners( StringList& listeners
-                 , OptionList& options)
-{
-   getSpecifiedOptions("l", listeners, options);
-}
-
-////////////////////////////////////////////////////////////
-static
-void getSearchingPathsOfListeners( StringList& paths
-                                 , OptionList& options)
-{
-   getSpecifiedOptions("L", paths, options);
-}
-
-////////////////////////////////////////////////////////////
-static
-void getSpecifiedFixtures( StringList& fixtures
-                         , OptionList& options)
-{
-   getSpecifiedOptions("f", fixtures, options);
-}
-
-////////////////////////////////////////////////////////////
-static
-bool useSandbox(OptionList& options)
-{
-   return getFlagOption("s", options);
-}
-
-////////////////////////////////////////////////////////////
-static
-bool useMemChecker(OptionList& options)
-{
-   return !getFlagOption("m", options);
-}
-
 
 ////////////////////////////////////////////////////////////
 int real_main(int argc, char* argv[])
 {
-   OptionList options;
-
-   options.parse(argc, argv, "f:L:l:c:t:s:m");
-
-   // if(options.args.size() == 0)
-   // {
-   //    usage("testngpp-runner");
-   // }
-
-   //showOptions(options);
-   
-   StringList listeners;
-   getListeners(listeners, options);   
-
-   StringList searchingPathsOfListeners;
-   getSearchingPathsOfListeners(searchingPathsOfListeners, options);   
-
-   StringList fixtures;
-   getSpecifiedFixtures(fixtures, options);
-
-   MemChecker::setGlobalOpen(useMemChecker(options));
-
-   bool usesSandbox = useSandbox(options);
-   
-   unsigned int maxConcurrent = 0;
-   if(usesSandbox)
-   {
-      maxConcurrent = getMaxConcurrent(options);
+   if (argc > 1) {
+       parse_args(argc, argv);
    }
    
-   std::string tagsFilterOption = getSingleOption("t", options, "*");
+   StringList listeners;
+   getListenerOptions(listeners);
+   StringList searchingPathsOfListeners;
+
+   StringList fixtures;
+   getSpecifiedFixtures(fixtures);
+
+   MemChecker::setGlobalOpen(useMemChecker());
+   
+   std::string tagsFilterOption = options.filterTags;
    StringList suites;
    const std::vector<std::string>& allSuites = ___testngpp_get_all_test_suites();
    for (auto item : allSuites) {
        suites.add(item);
    }
-   return TestRunner().runTests(useSandbox(options), maxConcurrent, suites, listeners
+   return TestRunner().runTests(false, 0, suites, listeners
                          , searchingPathsOfListeners, fixtures, tagsFilterOption);
 }
 
