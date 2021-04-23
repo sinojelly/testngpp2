@@ -21,6 +21,7 @@
 - [ ] 支持自动搜索测试用例 .h 文件。
 - [ ] 写一个sample工程，使得构建脚本最小化。
 - [ ] filter fixtures 可能不支持多个 -f 选项.
+- [ ] 如果只是删除生成的cxx，而构建结果临时文件未删除，则不会自动生成cxx。最终报错 AllTestSuites.cxx文件找不到。(即使修改.h也不会生成)
 
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(SimpleTestCaseRunner::run)
@@ -33,7 +34,7 @@
 - [x] filter tags 需要测试.
 - [x] 增加一个全局选项，替代掉 -l listener 以及它的参数。
 - [x] findSymbol重复，且不支持linux平台。需重构。
-- [x] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。(可能cmake已处理，依赖的.h未变，则不生成cxx; 如果.h改变则重新生成)
+- [x] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。(可能cmake已处理，依赖的.h未变，则不生成cxx; 如果.h改变则重新生成。)
 - [x] 增加到cmakelist的自动生成testsuites cxx文件的命令，可能不能正常工作。(如果文件已存在才能工作)
 
 - [x] 利用原来的编译脚本，把新的项目编译通过。
