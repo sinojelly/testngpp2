@@ -18,20 +18,22 @@
 - 编译所有 cpp 测试文件 并链接 libtestngpp.a 生成一个测试文件。
 
 ## 任务
+- [ ] 支持自动搜索测试用例 .h 文件。
+- [ ] filter fixtures 可能不支持多个 -f 选项.
+
+- [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(SimpleTestCaseRunner::run)
+- [ ] xml output未支持。
+- [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
+- [ ] 支持BDD类型的测试。
+
 - [x] Listener的类型和选项未传入。
 - [x] listener相关参数均为空。
-- [ ] xml output未支持。
-- [ ] filter fixtures 可能不支持多个 -f 选项.
 - [x] filter tags 需要测试.
 - [x] 增加一个全局选项，替代掉 -l listener 以及它的参数。
 - [x] findSymbol重复，且不支持linux平台。需重构。
-- [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
-- [ ] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。
+- [x] 当前 TestXXX.cxx 和 AllTestSuites.cxx 都不能在没有修改时，保持原来修改时间。会影响增量编译。(可能cmake已处理，依赖的.h未变，则不生成cxx; 如果.h改变则重新生成)
 - [x] 增加到cmakelist的自动生成testsuites cxx文件的命令，可能不能正常工作。(如果文件已存在才能工作)
-- [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
-
-- [ ] 支持BDD类型的测试。
 
 - [x] 利用原来的编译脚本，把新的项目编译通过。
 - [x] 简化CMakeList.txt, 直接添加cpp文件到一个CMakeList.txt。

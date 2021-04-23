@@ -75,9 +75,6 @@ ADD_CUSTOM_COMMAND(
   DEPENDS ${INPUT_H}
 )
 
-MESSAGE(${PYTHON} ${TEST_GENERATOR} -d ${TEST_SUITES_DIR} -p ${TEST_SUITE_PREFIX} ${INPUT_H})
-# execute_process(${PYTHON} ${TEST_GENERATOR} -d ${TEST_SUITES_DIR} -p ${TEST_SUITE_PREFIX} ${INPUT_H})
-
 ENDFOREACH()
 
 ###############################
