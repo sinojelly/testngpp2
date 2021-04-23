@@ -59,10 +59,15 @@ SET(TEST_GENERATOR ${CMAKE_SOURCE_DIR}/scripts/testngppgen.py)
 SET(TEST_SUITE_PREFIX ut_)
 SET(UT_CASES TestBar TestCxxTest TestFoo TestMemLeak)
 
+SET(TESTSUITE_SRCS ${TEST_SUITES_DIR}/AllTestSuites.cxx)
+
+
 FOREACH(CASE ${UT_CASES})
 
 SET(INPUT_H ${CMAKE_SOURCE_DIR}/samples/${CASE}.h)
 SET(OUTPUT_CXX ${TEST_SUITES_DIR}/ut_${CASE}.cxx)
+
+SET(TESTSUITE_SRCS ${TESTSUITE_SRCS} ${OUTPUT_CXX})
 
 ADD_CUSTOM_COMMAND(
   OUTPUT ${OUTPUT_CXX}
@@ -79,7 +84,6 @@ ENDFOREACH()
 # sources
 
 file(GLOB_RECURSE TESTNGPP_SRCS ./*.cpp ./*.c)
-file(GLOB_RECURSE TESTSUITE_SRCS ${TEST_SUITES_DIR}/*.cxx)
 
 ###############################
 # targets
