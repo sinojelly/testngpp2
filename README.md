@@ -29,15 +29,16 @@ testngpp和testngpp2相比，测试用例写法，用例管理方式都是保持
 |Android③|Clang|Yes       |Yes      | Yes          |
 
 注:
-① Base function包括：用例编写(包括tag,用例依赖)、用例管理(包括运行时过滤fixture/tag)等。
-② MinGW可靠性较差，比如.a rename fail, .cpp的函数实现无法链接等，不适合开发大的项目。
-③ Android+Termux，也可以使用VHEditor。
+- ① Base function包括：用例编写(包括tag,用例依赖)、用例管理(包括运行时过滤fixture/tag)等。
+- ② MinGW可靠性较差，比如.a rename fail, .cpp的函数实现无法链接等，不适合开发大的项目。
+- ③ Android+Termux，也可以使用VHEditor。
 
 ## testngpp2基本概念
 testngpp2用例编译运行流程如下：
 ![](images/testngpp2-compile-run-procedure.PNG)
+
 注：
-可执行文件名 Tests 用户可自定义。
+- 可执行文件名 Tests 用户可自定义。
 
 **几个主要的概念：**
 - **TestSuite**: 一个测试.h文件，就是一个TestSuite。
