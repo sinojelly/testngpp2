@@ -196,9 +196,16 @@ FIXTURE(DataDrivenTest)
 	}
 };
 ```
-## 说明
-1. 当前测试框架在 Windows 10 + Visual Studio 2019 编译运行通过。执行 build.bat 即可编译测试框架生成 testngpp2.lib 并且编译运行 samples 目录下的用例(因为历史原因，这些用例风格有点不同，建议参考TestMemLeak.h中的testngpp风格)。
+## 编译系统说明
+- build.bat /.sh
+  - 编译并运行samples程序。
+  - samples是用testngpp2写的一些样例，因为历史原因，用例风格有多种，建议参考TestMemLeak.h中的testngpp风格。
+  - 参考samples/CMakeLists.txt即可配置一个产品项目的测试工程。
+- build_install.bat / .sh
+  - 编译并安装，请先修改安装路径。
+- build_test.ps1 /.sh
+  - 编译并运行testngpp2的测试用例。
+  - testngpp2的测试用例仍然用testngpp写成，并且使用到mockcpp。
 
 Email to the current maintainers may be sent to
 <sinojelly@163.com>.
-
