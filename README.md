@@ -27,6 +27,7 @@ testngpp和testngpp2相比，测试用例写法，用例管理方式都是保持
 |Win10|MinGW②|Yes          |No       | Yes          |
 |Win10|VS2019|Yes         |Yes      | Yes          |
 |Android③|Clang|Yes       |Yes      | Yes          |
+
 注:
 ① Base function包括：用例编写(包括tag,用例依赖)、用例管理(包括运行时过滤fixture/tag)等。
 ② MinGW可靠性较差，比如.a rename fail, .cpp的函数实现无法链接等，不适合开发大的项目。
