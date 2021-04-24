@@ -7,7 +7,7 @@ INCLUDE(ProjectVar.txt)
 
 
 ADD_SUBDIRECTORY(src)
-
+ADD_SUBDIRECTORY(samples)
 
 ########################################################
 INSTALL(DIRECTORY include/testngpp DESTINATION include

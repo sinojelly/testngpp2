@@ -19,10 +19,11 @@
 
 ## 任务
 - [ ] 写一个sample工程，使得构建脚本最小化。
+- [ ] 把测试用例相关的cmake配置放到sample目录的CMakeList.txt
 
 - [ ] fixture filter看起来支持:分隔，还未测试。tag filter暂未测试。
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
-- [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(SimpleTestCaseRunner::run)
+- [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(win上有问题，linux没问题)(SimpleTestCaseRunner::run)
 - [ ] xml output未支持。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
 - [ ] 支持BDD类型的测试。
