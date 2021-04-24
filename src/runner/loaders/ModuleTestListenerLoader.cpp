@@ -74,19 +74,35 @@ parseCommandLine(const std::string& cl)
    name = args.second[0];
 }
 
+///////////////////////////////////////////////////////////
+#define LISTENER(name) testngppstdoutlistener_##name
+
+extern "C" DLL_EXPORT
+TestListener*
+LISTENER(create_instance)
+     ( TestResultReporter* resultReporter
+     , TestSuiteResultReporter* suiteReporter
+     , TestCaseResultReporter* caseResultReporter
+     , int argc
+     , char** argv);
+
+extern "C" DLL_EXPORT
+void
+LISTENER(destroy_instance)(TestListener* instance);
+
 ///////////////////////////////////////////////////////////////
 void
 ModuleTestListenerLoaderImpl::destroyListener()
 {
-   typedef void (*TestListenerDestroy)(TestListener*);
-   TestListenerDestroy destroy = 0;
+   //typedef void (*TestListenerDestroy)(TestListener*);
+   //TestListenerDestroy destroy = 0;
 
    __TESTNGPP_TRY
    {
-      destroy =  (TestListenerDestroy) \
+      //destroy =  (TestListenerDestroy) \
          loader->findSymbol(getDestroySymbolName(name));
 
-      destroy(listener);
+      LISTENER(destroy_instance)(listener);
    }
    __TESTNGPP_CATCH_ALL
    {
@@ -183,7 +199,7 @@ load( const StringList& searchingPaths
     , TestSuiteResultReporter* suiteResultReporter
     , TestCaseResultReporter* caseResultReporter)
 {
-   loader->load(searchingPaths, getListenerSharedObjectName(name));
+   /*loader->load(searchingPaths, getListenerSharedObjectName(name));
 
    typedef TestListener* (*TestListenerCreater) \
                   ( TestResultReporter* \
@@ -192,9 +208,9 @@ load( const StringList& searchingPaths
 						, int, char**);
 
    TestListenerCreater create = (TestListenerCreater) \
-       loader->findSymbol(getCreaterSymbolName(name));
+       loader->findSymbol(getCreaterSymbolName(name));*/
 
-   listener = create( resultReporter 
+   listener = LISTENER(create_instance)( resultReporter 
                     , suiteResultReporter
                     , caseResultReporter
                     , args.first
