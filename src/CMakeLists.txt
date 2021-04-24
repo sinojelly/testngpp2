@@ -96,7 +96,7 @@ ADD_LIBRARY(testngpp2 STATIC ${TESTNGPP_SRCS})
 
 INSTALL(
   TARGETS testngpp2
-  ARCHIVE DESTINATION testngpp/lib)
+  ARCHIVE DESTINATION lib)
 
 ADD_EXECUTABLE(testngpp2-runner ${TESTSUITE_SRCS}) 
 ADD_DEPENDENCIES(testngpp2-runner testngpp2)
