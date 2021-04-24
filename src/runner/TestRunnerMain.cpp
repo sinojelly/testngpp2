@@ -38,9 +38,6 @@ struct Options{
     bool memCheck = false;
 }options;
 
-// clipp命令行参数解析工具非常好用:
-// 1. 接口友好，很直观，可灵活组合，甚至可以加个括号就改变命令逻辑关系。
-// 2. 使用简单，自动根据命令行参数，设置对应的变量。自动生成帮助信息。
 void parse_args(int argc, char* argv[]) {
     auto cli = (
         repeatable(option("--filter-fixtures") & value("fixture name", options.filterFixtures)),

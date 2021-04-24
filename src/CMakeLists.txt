@@ -98,8 +98,11 @@ INSTALL(
   TARGETS testngpp2
   ARCHIVE DESTINATION testngpp/lib)
 
-ADD_EXECUTABLE(testngpp2-runner ${TESTNGPP_SRCS} ${TESTSUITE_SRCS}) 
+ADD_EXECUTABLE(testngpp2-runner ${TESTSUITE_SRCS}) 
+ADD_DEPENDENCIES(testngpp2-runner testngpp2)
+
 IF(UNIX)
-TARGET_LINK_LIBRARIES(testngpp2-runner dl)
+TARGET_LINK_LIBRARIES(testngpp2-runner testngpp2 dl)
 ELSE()
+TARGET_LINK_LIBRARIES(testngpp2-runner testngpp2)
 ENDIF()
