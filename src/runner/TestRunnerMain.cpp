@@ -22,8 +22,8 @@ USING_TESTNGPP_NS
 ////////////////////////////////////////////////////////////
 struct Options{
     // Testcase Selection
-    std::string filterFixtures="";
-    std::string filterTags="*";
+    std::vector<std::string> filterFixtures{};
+    std::string filterTags{"*"};
 
     // Output Configuration
     std::string output="stdout";
@@ -41,7 +41,7 @@ struct Options{
 void parse_args(int argc, char* argv[]) {
     auto cli = (
         repeatable(option("--filter-fixtures") & value("filter fixtures", options.filterFixtures)),
-        repeatable(option("--filter-tags") & value("filter tags", options.filterTags)),
+        option("--filter-tags") & value("filter tags", options.filterTags),
         option("-o", "--output") & value("output", options.output) 
            & option("-c").set(options.colourful) & option("-s").set(options.showSuite)
            & option("-f").set(options.showFixture) & option("-t").set(options.showTags) 
@@ -59,7 +59,9 @@ void parse_args(int argc, char* argv[]) {
 static
 void getSpecifiedFixtures( StringList& fixtures)
 {
-   fixtures.add(options.filterFixtures);
+   for (const auto& item : options.filterFixtures) {
+       fixtures.add(item);
+   }
 }
 
 ////////////////////////////////////////////////////////////

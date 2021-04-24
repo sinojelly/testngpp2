@@ -3,7 +3,6 @@
 
 USING_TESTNGPP_NS
 
-
 FIXTURE(MemLeak)
 {
 	TEST(new mem leak)
