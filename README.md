@@ -11,7 +11,7 @@ testngpp和testngpp2相比，测试用例写法，用例管理方式都是保持
 | 特性   | testngpp | testngpp2  | 改进成testngpp2的原因 |
 | --    | --       | --         | --                    | 
 | 编译   | 每个测试.h文件内容<br>编译成一个so | 可以任意多个测试.h文件内容<br>编译到一个可执行文件 | 更好的使用并行编译加速 |
-| 运行  | 测试工具是可执行文件,<br>动态加载listener和<br>各个TestSuite的so | 直接运行可执行文件即可 |①可执行文件运行可靠性更高;<br>②不依赖于不同平台不同的动态库加载机制,<br>更容易跨平台(比如Android+Termux环境);<br>③运行命令简单，可以不加任何命令行参数;<br>④静态链接testngpp2.a，不是使用可执行文件或so，<br>相同架构机器不同编译器版本可能复用 |
+| 运行  | 测试工具是可执行文件,<br>动态加载listener和<br>各个TestSuite的so | 直接运行可执行文件即可 |①可执行文件运行可靠性更高;<br>②对不同平台的动态库加载机制依赖较少,<br>更容易跨平台(比如支持Android+Termux环境);<br>③运行命令简单，可以不加任何命令行参数;<br>④静态链接testngpp2.a，不是使用可执行文件或so，<br>相同架构机器不同编译器版本可能复用 |
 
 相比testngpp，目前精简去掉了一些功能：
 - Sandbox运行机制
@@ -30,7 +30,7 @@ testngpp和testngpp2相比，测试用例写法，用例管理方式都是保持
 注:
 ① Base function包括：用例编写(包括tag,用例依赖)、用例管理(包括运行时过滤fixture/tag)等。
 ② MinGW可靠性较差，比如.a rename fail, .cpp的函数实现无法链接等，不适合开发大的项目。
-③ Android+Termux环境。(这个环境使用较少，暂未详细测试)
+③ Android+Termux，也可以使用VHEditor。
 
 ## testngpp2基本概念
 testngpp2用例编译运行流程如下：
@@ -45,13 +45,17 @@ testngpp2用例编译运行流程如下：
 - **SETUP,TEARDOWN**: 每个TestFixture可以有 SETUP, TEARDOWN方法，在每个用例运行前会执行SETUP,每个用例运行结束执行TEARDOWN。
 
 ## testngpp2命令行
+一般直接运行编译生成的可执行文件即可。
+如果希望只运行部分测试用例，或者定制输出格式，则需要了解命令行参数。
+
+testngpp2命令行说明：
 ```shell
 Tests [--filter-fixtures <fixture name>]...
       [--filter-tags     <tag>]
       [-o <output> [-c] [-s] [-f] [-t] [-v] [-l <output level>]] 
       [-m]
 ```
-执行 Tests -h 就可以查看上述帮助。命令行参数分为如下几类：
+执行 Tests -h 就可以查看上述帮助信息。命令行参数分为如下几类：
 
 **用例选择**: 选择要运行的用例，默认运行全部用例。
 - --filter-fixtures : 后面跟TestFixture名称，可以用*通配符，可以用多个--filter-fixtures <fixture name> 指定多个Fixture。
@@ -70,6 +74,8 @@ Tests [--filter-fixtures <fixture name>]...
      - warning         -    level 1   (output when level <= 1)
      - skipped         -    level 2   (output when level <= 2)
 - -o xml:file : 输出到xml （使用较少，暂未支持）
+
+默认输出配置是：-o stdout -c -v
 
 **运行配置**: 配置运行时参数。
 - -m : 关闭内存泄露检查。
