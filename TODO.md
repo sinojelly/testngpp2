@@ -19,7 +19,7 @@
 
 ## 任务
 - [ ] 写一个sample工程，使得构建脚本最小化。
-- [ ] filter fixtures 可能不支持多个 -f 选项.
+- [x] filter fixtures 可能不支持多个 -f 选项.
 - [x] 写一个用法的帮助文档。
 - [ ] Linux下编译运行。
 
