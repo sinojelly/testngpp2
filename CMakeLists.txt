@@ -1,7 +1,7 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.12...3.19)
 
-PROJECT(testngpp)
+PROJECT(testngpp2)
 
 INCLUDE(ProjectVar.txt)
 

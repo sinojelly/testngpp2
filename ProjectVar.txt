@@ -1,7 +1,7 @@
 
-SET(PACKAGE_NAME \"testngpp\")
-SET(PACKAGE_STRING \"testngpp\")
+SET(PACKAGE_NAME \"testngpp2\")
+SET(PACKAGE_STRING \"testngpp2\")
 SET(PACKAGE_BUGREPORT \"arthur.ii.yuan@gmail.com\")
-SET(PACKAGE_URL \"http://code.google.com/p/test-ng-pp\")
-SET(PACKAGE \"testngpp\")
-SET(VERSION \"1.1\")
+SET(PACKAGE_URL \"https://gitee.com/sinojelly/testngpp2\")
+SET(PACKAGE \"testngpp2\")
+SET(VERSION \"1.0\")
