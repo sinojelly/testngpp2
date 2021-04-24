@@ -53,9 +53,6 @@ SET(UT_CASES
 IF(UNIX)
   SET(UT_CASES
   ${UT_CASES}
-  TestModuleTestSuiteLoader.h
-  TestPipeReadableChannel.h
-  TestPipeWrittableChannel.h
   )
 ENDIF(UNIX)
 
@@ -71,11 +68,6 @@ SET(UT_CASES_WITH_MOCK
 IF(UNIX)
   SET(UT_CASES_WITH_MOCK
   ${UT_CASES_WITH_MOCK}
-  TestSandbox.h
-  TestSandboxProcessor.h
-  TestTestCaseSandboxResultReporter.h
-  TestTestFixtureSandboxRunner.h
-  TestTestSuiteContext.h  
   )
 ENDIF(UNIX)
 
