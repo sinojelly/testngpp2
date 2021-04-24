@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with TestNG++.  If not, see <http://www.gnu.org/licenses/>.
 **/
-
+#ifndef __clang__
 
 // for new/delete
 #include <new>
@@ -212,3 +212,5 @@ void operator delete [] (void * p)
 #endif
 
 //////////////////////////////////////////////////////////////////
+
+#endif
