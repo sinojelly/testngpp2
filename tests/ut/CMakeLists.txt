@@ -126,8 +126,7 @@ FOREACH(CASE ${UT_CASES})
     testngppst
     testngppst-runner-lib
     testngppst-except
-    testngpp-static
-    testngppxmllistener-fortest
+    testngpp2
     mockcpp)
 
   ADD_CUSTOM_COMMAND(

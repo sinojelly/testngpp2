@@ -37,7 +37,7 @@ struct ModuleTestListenerLoaderImpl
    StringToOptions::CArgs args; 
    
    TestListener* listener;
-   //ModuleLoader* loader;
+   ModuleLoader* loader;
 };
 
 namespace
@@ -75,11 +75,6 @@ parseCommandLine(const std::string& cl)
 }
 
 ///////////////////////////////////////////////////////////////
-extern "C" {
-extern void
-testngppstdoutlistener_destroy_instance(TestListener* instance);
-}
-
 void
 ModuleTestListenerLoaderImpl::destroyListener()
 {
@@ -88,8 +83,8 @@ ModuleTestListenerLoaderImpl::destroyListener()
 
    __TESTNGPPST_TRY
    {
-      destroy =  (TestListenerDestroy) testngppstdoutlistener_destroy_instance;
-         //loader->findSymbol(getDestroySymbolName(name));
+      destroy =  (TestListenerDestroy) \
+         loader->findSymbol(getDestroySymbolName(name));
 
       destroy(listener);
    }
@@ -100,7 +95,7 @@ ModuleTestListenerLoaderImpl::destroyListener()
    __TESTNGPPST_FINALLY
    {
       listener = 0;
-      //loader->unload();
+      loader->unload();
    }
    __TESTNGPPST_DONE
 
@@ -129,11 +124,11 @@ ModuleTestListenerLoaderImpl::
       destroyListener();
    }
 
-   // if(loader != 0)
-   // {
-   //    loader->unload();
-   //    delete loader;
-   // }
+   if(loader != 0)
+   {
+      loader->unload();
+      delete loader;
+   }
 }
 
 ///////////////////////////////////////////////////////////////
@@ -181,15 +176,6 @@ namespace
 }
 
 ///////////////////////////////////////////////////////////////
-extern "C" {
-extern TestListener*
-testngppstdoutlistener_create_instance
-     ( TestResultReporter* resultReporter
-     , TestSuiteResultReporter* suiteReporter
-     , TestCaseResultReporter* caseResultReporter
-     , int argc
-     , char** argv);
-}
 void
 ModuleTestListenerLoaderImpl::
 load( const StringList& searchingPaths
@@ -197,7 +183,7 @@ load( const StringList& searchingPaths
     , TestSuiteResultReporter* suiteResultReporter
     , TestCaseResultReporter* caseResultReporter)
 {
-   //loader->load(searchingPaths, getListenerSharedObjectName(name));
+   loader->load(searchingPaths, getListenerSharedObjectName(name));
 
    typedef TestListener* (*TestListenerCreater) \
                   ( TestResultReporter* \
@@ -205,8 +191,8 @@ load( const StringList& searchingPaths
 						, TestCaseResultReporter* \
 						, int, char**);
 
-   TestListenerCreater create = (TestListenerCreater) testngppstdoutlistener_create_instance;
-       // loader->findSymbol(getCreaterSymbolName(name));
+   TestListenerCreater create = (TestListenerCreater) \
+       loader->findSymbol(getCreaterSymbolName(name));
 
    listener = create( resultReporter 
                     , suiteResultReporter

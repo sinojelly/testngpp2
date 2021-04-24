@@ -35,12 +35,12 @@ $OS_COMPILER="$global:MY_OS_NAME\$global:MY_CXX_COMPILER_NAME\$global:MY_CXX_COM
 echo "OS_COMPILER in Powershell : $OS_COMPILER"
 
 if (-not ($args[1] -eq "test")) {
-Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp"
-Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp"
-Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/mockcpp_tests"
-CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
-CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
-CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/testngpp"
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests/3rdparty/testngppst -B $BUILD_DIR/testngpp_testngppst"
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/testngpp_tests"
+CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp
+CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_testngppst
+CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_tests
 }
 
-RunTests $BUILD_DIR mockcpp_tests $global:MAKE_BUILD_TYPE mockcpp_testngpp
+RunTests $BUILD_DIR testngpp_tests $global:MAKE_BUILD_TYPE testngpp_testngppst st

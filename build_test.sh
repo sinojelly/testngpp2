@@ -42,14 +42,14 @@ echo "OS_COMPILER in Shell : $OS_COMPILER"
 
 #if [ $3 != "test" ]; then
 
-cmake  -S . -B $BUILD_DIR/mockcpp
-cmake  -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp
-cmake  -S tests -B $BUILD_DIR/mockcpp_tests
+cmake  -S . -B $BUILD_DIR/testngpp
+cmake  -S tests/3rdparty/testngppst -B $BUILD_DIR/testngpp_testngppst
+cmake  -S tests -B $BUILD_DIR/testngpp_tests
 
-CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
-CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
-CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_testngppst
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_tests
 
 #fi
 
-RunTests $BUILD_DIR mockcpp_tests $MAKE_BUILD_TYPE mockcpp_testngpp
+RunTests $BUILD_DIR testngpp_tests $MAKE_BUILD_TYPE testngpp_testngppst st
