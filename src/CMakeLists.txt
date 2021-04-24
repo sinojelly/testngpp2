@@ -24,6 +24,10 @@ IF(UNIX OR MINGW)
 ADD_DEFINITIONS(
     -g -ggdb
 )
+ADD_LINK_OPTIONS(
+    -rdynamic
+    #-Wl --export-dynamic
+)
 ENDIF(UNIX OR MINGW)
 
 IF(UNIX AND NOT CYGWIN)
