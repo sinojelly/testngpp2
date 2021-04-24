@@ -35,6 +35,8 @@ testngpp和testngpp2相比，测试用例写法，用例管理方式都是保持
 ## testngpp2基本概念
 testngpp2用例编译运行流程如下：
 ![](images/testngpp2-compile-run-procedure.PNG)
+注：
+可执行文件名 Tests 用户可自定义。
 
 **几个主要的概念：**
 - **TestSuite**: 一个测试.h文件，就是一个TestSuite。

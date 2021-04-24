@@ -19,16 +19,17 @@
 
 ## 任务
 - [ ] 写一个sample工程，使得构建脚本最小化。
-- [x] filter fixtures 可能不支持多个 -f 选项.
-- [x] 写一个用法的帮助文档。
 - [ ] Linux下编译运行。
 
+- [ ] fixture filter看起来支持:分隔，还未测试。tag filter暂未测试。
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(SimpleTestCaseRunner::run)
 - [ ] xml output未支持。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
 - [ ] 支持BDD类型的测试。
 
+- [x] filter fixtures 可能不支持多个 -f 选项.
+- [x] 写一个用法的帮助文档。
 - [x] 如果只是删除生成的cxx，而构建结果临时文件未删除，则不会自动生成cxx。最终报错 AllTestSuites.cxx文件找不到。(即使修改.h也不会生成, 自定义命令OUTPUT增加AllTestSuites.cxx即可)
 - [x] 支持自动搜索测试用例 .h 文件。
 - [x] Listener的类型和选项未传入。
