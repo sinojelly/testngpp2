@@ -8,6 +8,7 @@ INCLUDE(ProjectVar.txt)
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(samples)
+ADD_SUBDIRECTORY(scripts)
 
 ########################################################
 INSTALL(DIRECTORY include/testngpp DESTINATION include
@@ -17,6 +18,3 @@ INSTALL(DIRECTORY include/testngpp DESTINATION include
 
 INSTALL(DIRECTORY include/fake_boost DESTINATION include
           PATTERN ".svn" EXCLUDE)
-
-INSTALL(DIRECTORY scripts DESTINATION generator
-          PATTERN "__pycache__" EXCLUDE)
