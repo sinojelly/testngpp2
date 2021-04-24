@@ -4,7 +4,8 @@
 ### 1. 简化编译工程， 加快编译速度
 - 编译时，针对每个cpp测试文件生成一个so。(链接次数多，耗时长，而且很难并行 make -j 也不能起作用)
 - 编译的 CMakeList.txt 较复杂。
-- 之前修改被测cpp，可能不能重新编译测试的so。
+- 之前修改被测cpp，可能不能重新编译测试的so。(增加测试target对被测.a的依赖也许可以解决)
+- 测试用例在多个so文件中，如果去掉用例时，只是修改CMakeLists.txt，不删除so，则运行时还是运行了它，增加定位成本。
 
 ### 2. 简化运行命令， 方便运行和调试
 - 运行时需要较多参数，新手会觉得困难
@@ -18,8 +19,6 @@
 - 编译所有 cpp 测试文件 并链接 libtestngpp.a 生成一个测试文件。
 
 ## 任务
-- [ ] 写一个sample工程，使得构建脚本最小化。
-
 - [ ] fixture filter看起来支持:分隔，还未测试。tag filter暂未测试。
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(win上有问题，linux没问题)(SimpleTestCaseRunner::run)
@@ -28,6 +27,7 @@
 - [ ] 支持BDD类型的测试。
 - [ ] 未测试的testngpp-runner老的命令行参数(tag)：-t"* > succ > nothing" -c10
 
+- [x] 写一个sample工程，使得构建脚本最小化。参考samples目录样例CMakeLists即可。
 - [x] 把测试用例相关的cmake配置放到sample目录的CMakeList.txt
 - testngpp2自身的测试用例，还是用的testngpp和mockcpp来支持的。
 - [x] Linux下编译运行。
