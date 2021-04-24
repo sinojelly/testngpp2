@@ -26,7 +26,6 @@ ADD_DEFINITIONS(
 )
 ADD_LINK_OPTIONS(
     -rdynamic
-    #-Wl --export-dynamic
 )
 ENDIF(UNIX OR MINGW)
 

@@ -24,16 +24,10 @@ EmptyModuleLoader::findSymbol(const std::string& symbol)
 #else
 
 // unix
-//#define _GNU_SOURCE
 #include <dlfcn.h>
 void*
 EmptyModuleLoader::findSymbol(const std::string& symbol)
 {
-    /*void *hndl = dlopen (NULL, RTLD_LAZY);
-    if(hndl == 0)
-    {
-        throw Error(dlerror());
-    }*/
     void* ptr = (void*) dlsym(RTLD_DEFAULT, symbol.c_str());
     if(ptr == 0)
     {
