@@ -25,13 +25,13 @@ EmptyModuleLoader::findSymbol(const std::string& symbol)
 
 // unix
 #include <dlfcn.h>
-static void*
+void*
 EmptyModuleLoader::findSymbol(const std::string& symbol)
 {
-    void* ptr = (void*) ::dlsym(RTLD_DEFAULT, symbol.c_str());
+    void* ptr = (void*) dlsym(RTLD_DEFAULT, symbol.c_str());
     if(ptr == 0)
     {
-        throw Error(::dlerror());
+        throw Error(dlerror());
     }
 
     return ptr;

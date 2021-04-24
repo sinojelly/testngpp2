@@ -89,11 +89,14 @@ file(GLOB_RECURSE TESTNGPP_SRCS ./*.cpp ./*.c)
 ###############################
 # targets
 
-ADD_LIBRARY(testngpp-static STATIC ${TESTNGPP_SRCS})
+ADD_LIBRARY(testngpp2 STATIC ${TESTNGPP_SRCS})
 
 INSTALL(
-  TARGETS testngpp-static
+  TARGETS testngpp2
   ARCHIVE DESTINATION testngpp/lib)
 
-
-ADD_EXECUTABLE(testngpp-runner ${TESTNGPP_SRCS} ${TESTSUITE_SRCS}) 
+ADD_EXECUTABLE(testngpp2-runner ${TESTNGPP_SRCS} ${TESTSUITE_SRCS}) 
+IF(UNIX)
+TARGET_LINK_LIBRARIES(testngpp2-runner dl)
+ELSE()
+ENDIF()
