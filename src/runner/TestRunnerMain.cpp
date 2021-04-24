@@ -40,8 +40,8 @@ struct Options{
 
 void parse_args(int argc, char* argv[]) {
     auto cli = (
-        option("--filter-fixtures") & value("filter fixtures", options.filterFixtures),
-        option("--filter-tags") & value("filter tags", options.filterTags),
+        repeatable(option("--filter-fixtures") & value("filter fixtures", options.filterFixtures)),
+        repeatable(option("--filter-tags") & value("filter tags", options.filterTags)),
         option("-o", "--output") & value("output", options.output) 
            & option("-c").set(options.colourful) & option("-s").set(options.showSuite)
            & option("-f").set(options.showFixture) & option("-t").set(options.showTags) 
