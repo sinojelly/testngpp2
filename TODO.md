@@ -20,6 +20,8 @@
 ## 任务
 - [ ] 写一个sample工程，使得构建脚本最小化。
 - [ ] filter fixtures 可能不支持多个 -f 选项.
+- [x] 写一个用法的帮助文档。
+- [ ] Linux下编译运行。
 
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(SimpleTestCaseRunner::run)

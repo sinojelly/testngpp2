@@ -216,7 +216,7 @@ load( const StringList& searchingPaths
 {
    This->parseCommandLine(cl);
 
-   std::cout << "loading " << This->name << " ... "; std::cout.flush();
+   std::cout << "using " << This->name << " ... "; std::cout.flush();
 
    __TESTNGPP_TRY
    {
