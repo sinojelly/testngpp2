@@ -26,7 +26,9 @@
 - [ ] xml output未支持。
 - [ ] 确认xml, stdout输出切换命令，不用加载so的方式。
 - [ ] 支持BDD类型的测试。
+- [ ] 未测试的testngpp-runner老的命令行参数(tag)：-t"* > succ > nothing" -c10
 
+- testngpp2自身的测试用例，还是用的testngpp和mockcpp来支持的。
 - [x] Linux下编译运行。
 - [x] filter fixtures 可能不支持多个 -f 选项.
 - [x] 写一个用法的帮助文档。
