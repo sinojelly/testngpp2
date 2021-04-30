@@ -27,6 +27,7 @@
 - [ ] 支持BDD类型的测试。
 - [ ] 未测试的testngpp-runner老的命令行参数(tag)：-t"* > succ > nothing" -c10
 
+- [x] 测试用例中的中文字符，Windows上MSVC编译结果在命令行输出时显示为乱码。(解决办法：增加编译选项  /source-charset:utf-8)
 - [x] 写一个sample工程，使得构建脚本最小化。参考samples目录样例CMakeLists即可。
 - [x] 把测试用例相关的cmake配置放到sample目录的CMakeList.txt
 - testngpp2自身的测试用例，还是用的testngpp和mockcpp来支持的。
