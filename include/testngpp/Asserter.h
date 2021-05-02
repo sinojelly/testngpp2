@@ -179,6 +179,8 @@ TESTNGPP_NS_START
    __ASSERT_THROWS_EQ(expr, except, expected, value, true)
 #define ASSERT_SAME_DATA(addr1, addr2, size) __ASSERT_SAME_DATA(addr1, addr2, size, true)
 #define ASSERT_DELTA(x, y, d)  __ASSERT_DELTA(x, y, d, true)
+#define ASSERT_STREQ(expect, result) \
+     ASSERT_SAME_DATA((void*)expect, (void*)result, strlen(expect) + 1)
 
 //////////////////////////////////////////////////////////////////
 #define EXPECT_TRUE(expr) __ASSERT_TRUE(expr, false)
@@ -192,6 +194,8 @@ TESTNGPP_NS_START
    __ASSERT_THROWS_EQ(expr, except, expected, value, false)
 #define EXPECT_SAME_DATA(addr1, addr2, size) __ASSERT_SAME_DATA(addr1, addr2, size, false)
 #define EXPECT_DELTA(x, y, d)  __ASSERT_DELTA(x, y, d, false)
+#define EXPECT_STREQ(expect, result) \
+     EXPECT_SAME_DATA((void*)expect, (void*)result, strlen(expect) + 1)
 
 //////////////////////////////////////////////////////////////////
 #define FAIL(msg) do { \
