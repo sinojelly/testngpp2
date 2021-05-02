@@ -22,7 +22,7 @@
 #include <sstream>
 
 #ifdef _MSC_VER
-#include <GetOpt.h>
+#include "GetOpt.h"
 #else
 #include <unistd.h>
 #endif

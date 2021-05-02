@@ -12,7 +12,7 @@
 
 #include <testngpp/internal/MemChecker.h>
 
-#include "clipp.h"
+#include "../utils/clipp.h"
 using namespace clipp;
 
 extern "C" const std::vector<std::string>& ___testngpp_get_all_test_suites();
