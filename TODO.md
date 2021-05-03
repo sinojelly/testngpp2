@@ -19,6 +19,8 @@
 - 编译所有 cpp 测试文件 并链接 libtestngpp.a 生成一个测试文件。
 
 ## 任务
+- [ ] 改名一个测试.h文件，会导致运行出错，提示一个老的.h对应的suite不能加载。因为AllTestSuites.cxx 中仍然保留了老的.h对应的信息。解决办法：生成 AllTestSuites.cxx时，总是根据现有的测试 .h 生成，并且去掉原来的列表内容。另外，老的测试.h对应的cxx文件不会自动删除。
+
 - [ ] fixture filter看起来支持:分隔，还未测试。tag filter暂未测试。
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
 - [ ] 如果开启mem checker，则用例执行结束，没有汇总的测试报告出来。(win上有问题，linux没问题)(SimpleTestCaseRunner::run)
