@@ -210,10 +210,28 @@ FIXTURE(DataDrivenTest)
   - testngpp2的测试用例仍然用testngpp写成，并且使用到mockcpp。
 
 ## FAQ
-1. 如果遇到类似下面的编译错误，删除自动生成的 测试 .cxx 文件 重新编译即可。
+##### 1. 如果遇到类似下面的编译错误，删除自动生成的 测试 .cxx 文件 重新编译即可。
 这是概率出现的 测试 .h 文件更新, 比如加入一些注释行，使得TEST所在行号改变，但是cmake未触发重新生成对应的.cxx文件导致的。
 ```
 gen_testsuites\ut_TestRightValueOld.cxx(35,18): error C2039: "test_56": 不是 "TestTestRightValue" 的成员 [D:\Develop\cpp\learn-cpp\build\tests\ut\LearnCppTests.vcxproj]
+```
+
+##### 2. Be carefull that the "{" after FIXTURE(xxx) and TEST(xxx) should be in the new line.
+The test code below in TestXXX.h cause failure in generating TestXXX.cxx file.
+``` c++
+FIXTURE(TestXXX) {
+    TEST(test something) {
+    }
+};
+```
+It should be:
+``` c++
+FIXTURE(TestXXX)
+{ // Must like this, or else generate TestXXX.cpp fail.
+    TEST(test something) 
+    {  // Must like this, or else no testcase
+    }
+};
 ```
 
 Email to the current maintainers may be sent to
