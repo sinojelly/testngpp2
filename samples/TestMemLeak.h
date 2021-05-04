@@ -9,4 +9,9 @@ FIXTURE(MemLeak)
 	{
 		char *p = new char;
 	}
+
+	TEST(test string eq)
+	{
+		ASSERT_STREQ("abcd", "efgh");
+	}
 };

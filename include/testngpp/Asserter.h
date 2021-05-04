@@ -168,6 +168,21 @@ TESTNGPP_NS_START
 }while(0)
 
 //////////////////////////////////////////////////////////////////
+// expected and result should be char*
+#define __ASSERT_STREQ(expected, result, failfast) do { \
+   if(strcmp(expected, result) != 0) \
+   { \
+      std::stringstream ss; \
+      ss << "expected string: (" \
+         << expected \
+         << "), actual: (" \
+         << result \
+         << ")"; \
+      __TESTNGPP_REPORT_FAILURE(ss.str(), failfast); \
+   } \
+}while(0)
+
+//////////////////////////////////////////////////////////////////
 #define ASSERT_TRUE(expr) __ASSERT_TRUE(expr, true)
 #define ASSERT_FALSE(expr) __ASSERT_FALSE(expr, true)
 #define ASSERT_EQ(expected, value) __ASSERT_EQ(expected, value, true)
@@ -180,7 +195,7 @@ TESTNGPP_NS_START
 #define ASSERT_SAME_DATA(addr1, addr2, size) __ASSERT_SAME_DATA(addr1, addr2, size, true)
 #define ASSERT_DELTA(x, y, d)  __ASSERT_DELTA(x, y, d, true)
 #define ASSERT_STREQ(expect, result) \
-     ASSERT_SAME_DATA((void*)expect, (void*)result, strlen(expect) + 1)
+     __ASSERT_STREQ(expect, result, true)
 
 //////////////////////////////////////////////////////////////////
 #define EXPECT_TRUE(expr) __ASSERT_TRUE(expr, false)
@@ -195,7 +210,7 @@ TESTNGPP_NS_START
 #define EXPECT_SAME_DATA(addr1, addr2, size) __ASSERT_SAME_DATA(addr1, addr2, size, false)
 #define EXPECT_DELTA(x, y, d)  __ASSERT_DELTA(x, y, d, false)
 #define EXPECT_STREQ(expect, result) \
-     EXPECT_SAME_DATA((void*)expect, (void*)result, strlen(expect) + 1)
+      __ASSERT_STREQ(expect, result, false)
 
 //////////////////////////////////////////////////////////////////
 #define FAIL(msg) do { \
