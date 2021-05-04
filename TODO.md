@@ -19,8 +19,8 @@
 - 编译所有 cpp 测试文件 并链接 libtestngpp.a 生成一个测试文件。
 
 ## 任务
-- [ ] 改名一个测试.h文件，会导致运行出错，提示一个老的.h对应的suite不能加载。因为AllTestSuites.cxx 中仍然保留了老的.h对应的信息。解决办法：生成 AllTestSuites.cxx时，总是根据现有的测试 .h 生成，并且去掉原来的列表内容。另外，老的测试.h对应的cxx文件不会自动删除。
 - [ ] 字符串比较，需要实现一个打印错误信息更友好的方式，能直接打印对比的字符串，而不是二进制数。
+- [ ] 在一个测试 .h 中增加很多行注释，然后编译报错：D:\Develop\cpp\learn-cpp\gen_testsuites\ut_TestRightValueOld.cxx(35,18): error C2039: "test_56": 不是 "TestTestRightValue" 的成员 [D:\Develop\cpp\learn-cpp\build\tests\ut\LearnCppTests.vcxproj] (猜测的原因是.h中增加注释，引起TEST所在行号变化，但是概率出现cmake不自动生成cxx文件，从而编译报错。可以用__COUNTER__代替__LINE__,同时修改testngppgen python脚本，脚本修改难度较大，测试场景也较多。暂时可通过删除自动生成的cxx文件重新生成解决。如果此问题出现概率高再考虑修改。)
 
 - [ ] fixture filter看起来支持:分隔，还未测试。tag filter暂未测试。
 - [ ] python解析和处理测试.h文件时，针对FIXTURE和TEST后面{未换行的情况作编译报错，或者作兼容处理。
@@ -30,6 +30,7 @@
 - [ ] 支持BDD类型的测试。
 - [ ] 未测试的testngpp-runner老的命令行参数(tag)：-t"* > succ > nothing" -c10
 
+- [x] 改名一个测试.h文件，会导致运行出错，提示一个老的.h对应的suite不能加载。因为AllTestSuites.cxx 中仍然保留了老的.h对应的信息。解决办法：生成 AllTestSuites.cxx时，总是根据现有的测试 .h 生成，并且去掉原来的列表内容。另外，老的测试.h对应的cxx文件不会自动删除。--很难改，除非构建脚本中每次删除 AllTestSuites.cxx 重新生成。因为处理每个测试 .h 文件时，是查找列表是否已存在，不存在则插入。没法删除老的。如果每次删除它，又不利于增量构建。因此只是在报错时加提示。
 - [x] 测试用例中的中文字符，Windows上MSVC编译结果在命令行输出时显示为乱码。(解决办法：增加编译选项  /source-charset:utf-8)
 - [x] 写一个sample工程，使得构建脚本最小化。参考samples目录样例CMakeLists即可。
 - [x] 把测试用例相关的cmake配置放到sample目录的CMakeList.txt
