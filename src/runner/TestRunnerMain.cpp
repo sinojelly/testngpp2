@@ -69,6 +69,7 @@ static
 bool useMemChecker()
 {
    return !options.memCheck;
+   // return false; // MinGW does not support memchecker, so compile the .a not use memchecker
 }
 
 ////////////////////////////////////////////////////////////
