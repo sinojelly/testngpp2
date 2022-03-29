@@ -15,8 +15,10 @@ IF(UNIX OR MINGW)
 ADD_DEFINITIONS(
     -g -ggdb
 )
+
 ADD_LINK_OPTIONS(
-    -rdynamic
+	#-rdynamic   # MinGW compile error
+	-Wl,--export-all-symbols
 )
 ENDIF(UNIX OR MINGW)
 
