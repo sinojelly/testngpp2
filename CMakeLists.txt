@@ -18,3 +18,5 @@ INSTALL(DIRECTORY include/testngpp DESTINATION include
 
 INSTALL(DIRECTORY include/fake_boost DESTINATION include
           PATTERN ".svn" EXCLUDE)
+
+INSTALL(FILES include/testngpp/runner/loaders/ModuleLoader.h DESTINATION include/testngpp/runner/loaders)
