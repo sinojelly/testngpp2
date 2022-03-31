@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from logging import fatal
 from .Phase1Result import *
 
 from .TestScope import TestScope

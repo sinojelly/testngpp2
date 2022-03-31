@@ -66,7 +66,25 @@ class Phase1Parser:
       if not matched:
          return content
 
+      if self.slc_start_in_string(content):
+         return content
+
       return matched.group("content")
+
+   #######################################################
+   # slc is short for single line comment
+   # if // is in string, not treat it as comment
+   # avoid string("http://path/to/file") splited issue
+   def slc_start_in_string(self, content):
+      in_string = False
+      content_length = len(content)
+      for index in range(0, content_length):
+         if content[index] is '"':
+            in_string = not in_string
+         elif content[index] is "/" and index + 1 < content_length \
+            and content[index + 1] is "/":
+            return in_string
+      return False
 
    #######################################################
    def try_to_erase_comment(self, line):
