@@ -66,16 +66,21 @@ class Phase1Parser:
       if not matched:
          return content
 
-      if self.slc_start_in_string(content):
+      comment_start = self.slc_start_in_string(content)
+      if comment_start == -1:
          return content
+      else:
+         return content[0:comment_start]
 
-      return matched.group("content")
+      # return matched.group("content")
 
    #######################################################
    # slc is short for single line comment
-   # if // is in string, not treat it as comment
-   # avoid string("http://path/to/file") splited issue
+   # scene 1: if // is in string, not treat it as comment
+   #          avoid string("http://path/to/file") splited issue
+   # scene 2: , DATA_GROUP("http://1.2.3.4/resource/a.mp3") // comment
    def slc_start_in_string(self, content):
+      comment_start = -1
       in_string = False
       content_length = len(content)
       for index in range(0, content_length):
@@ -83,8 +88,12 @@ class Phase1Parser:
             in_string = not in_string
          elif content[index] is "/" and index + 1 < content_length \
             and content[index + 1] is "/":
-            return in_string
-      return False
+            if in_string:
+               continue
+            else:
+               comment_start = index
+               return comment_start
+      return comment_start
 
    #######################################################
    def try_to_erase_comment(self, line):
