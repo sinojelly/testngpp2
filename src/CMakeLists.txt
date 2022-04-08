@@ -36,9 +36,9 @@ ENDIF(MSVC)
 ###############################
 # includes
 
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty ${CMAKE_SOURCE_DIR}/src/utils)
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/../include ${CMAKE_CURRENT_SOURCE_DIR}/src/utils)
 IF(MSVC)
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include/msinttypes)
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/../include/msinttypes)
 ENDIF(MSVC)
 
 ###############################
