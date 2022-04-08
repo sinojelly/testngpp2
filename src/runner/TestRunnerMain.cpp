@@ -27,7 +27,7 @@ struct Options{
 
     // Output Configuration
     std::string output="stdout";
-    bool colourful = true;
+    bool colourful = false;
     bool showSuite = false;
     bool showFixture = false;
     bool showTags = false;
@@ -68,8 +68,8 @@ void getSpecifiedFixtures( StringList& fixtures)
 static
 bool useMemChecker()
 {
-   return !options.memCheck;
-   // return false; // MinGW does not support memchecker, so compile the .a not use memchecker
+    // return !options.memCheck;
+   return false; // MinGW does not support memchecker, so compile the .a not use memchecker
 }
 
 ////////////////////////////////////////////////////////////
