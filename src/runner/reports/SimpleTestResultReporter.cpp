@@ -164,6 +164,12 @@ addSuiteError(TestSuiteInfoReader*, const std::string& msg )
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
+finishExceptionTestSuite()
+{
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultReporter::
 startTagsFiltering(const TagsFilterRule*)
 {
    This->round++;

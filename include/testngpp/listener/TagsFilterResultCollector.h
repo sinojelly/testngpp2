@@ -17,6 +17,7 @@ struct TagsFilterResultCollector
 {
 	virtual void startTagsFiltering(const TagsFilterRule*) {}
 	virtual void endTagsFiltering(const TagsFilterRule*) {}
+	void finishExceptionTestSuite() {}
 
    virtual ~TagsFilterResultCollector() {}
 };

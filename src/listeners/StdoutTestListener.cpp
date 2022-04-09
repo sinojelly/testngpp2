@@ -168,6 +168,7 @@ struct StdoutTestListener : public TestListener
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
+   void finishExceptionTestSuite() {}
    
    void startTagsFiltering(const TagsFilterRule*);
    void endTagsFiltering(const TagsFilterRule*);

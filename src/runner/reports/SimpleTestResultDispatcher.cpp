@@ -42,6 +42,7 @@ struct SimpleTestResultDispatcherImpl
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
+   void finishExceptionTestSuite();
 
    void startTagsFiltering(const TagsFilterRule*);
    void endTagsFiltering(const TagsFilterRule*);
@@ -532,6 +533,27 @@ void SimpleTestResultDispatcher::
 addSuiteError(TestSuiteInfoReader* suite, const std::string& msg )
 {
    This->addSuiteError(suite, msg);
+}
+
+void SimpleTestResultDispatcher::
+finishExceptionTestSuite()
+{
+    This->finishExceptionTestSuite();
+}
+
+void SimpleTestResultDispatcherImpl::
+finishExceptionTestSuite()
+{
+    SuiteListeners::iterator it = suiteListeners.begin();
+    for(; it != suiteListeners.end(); it++)
+    {
+        (*it)->finishExceptionTestSuite();
+    }
+    Listeners::iterator i = listeners.begin();
+    for(; i != listeners.end(); i++)
+    {
+        (*i)->finishExceptionTestSuite();
+    }
 }
 
 ///////////////////////////////////////////////////////////

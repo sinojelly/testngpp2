@@ -65,9 +65,14 @@ void
 TestSuiteRunnerImpl::
 run(TestSuiteContext* suite, const TestCaseFilter* filter)
 {
-   resultCollector->startTestSuite(suite->getSuite());
-	runAllFixtures(suite, filter);
-   resultCollector->endTestSuite(suite->getSuite());
+    try {
+        resultCollector->startTestSuite(suite->getSuite());
+        runAllFixtures(suite, filter);
+        resultCollector->endTestSuite(suite->getSuite());
+    } catch (...) { // Any exception should finish the suite, or else next suite can not run.
+        resultCollector->finishExceptionTestSuite();
+        throw;
+    }
 }
 
 /////////////////////////////////////////////////////////////////

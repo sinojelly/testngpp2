@@ -51,7 +51,7 @@ struct SimpleTestSuiteResultReporter
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
-
+   void finishExceptionTestSuite();
 private:
    SimpleTestSuiteResultReporterImpl* This;
 

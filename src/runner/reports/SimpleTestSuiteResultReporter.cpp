@@ -220,6 +220,14 @@ endTestSuite(TestSuiteInfoReader* suite)
 }
 
 ///////////////////////////////////////////////////////////
+// If start the suite exception, should finish it, or else next suite can not run.
+void SimpleTestSuiteResultReporter::
+finishExceptionTestSuite()
+{
+    This->finished = true;
+}
+
+///////////////////////////////////////////////////////////
 void SimpleTestSuiteResultReporter::
 addSuiteError(TestSuiteInfoReader* suite, const std::string& msg)
 {

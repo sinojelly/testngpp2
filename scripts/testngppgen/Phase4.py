@@ -180,13 +180,17 @@ class TestCaseDefGenerator:
          get_fixture_id(self.fixture), \
          get_fixture_id(self.fixture), \
          test_invocation, \
-         len(self.testcase.get_tags() + self.fixture.get_tags()), \
+         self.get_tag_count(), \
          get_testcase_tags(self.testcase, self.fixture), \
          get_testcase_memcheck_switch(self.testcase, self.fixture), \
          get_fixture_id(self.fixture), \
          get_testcase_instance_name(self.fixture, self.testcase, name, index) \
       )
       output(testcase_def, self.file)
+
+   #############################################
+   def get_tag_count(self):
+      return len(set(self.testcase.get_tags()).union(set(self.fixture.get_tags())))
 
    #############################################
    def __generate_p_tests(self):
