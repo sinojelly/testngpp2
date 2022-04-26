@@ -1,6 +1,7 @@
 
 import os
 import codecs
+import pathlib
 
 from .Message import *
 
@@ -552,7 +553,7 @@ class SuiteGenerator:
       self.generate_dep_headers()
 
       for header in self.fixture_files:
-         output("#include \"" + os.path.relpath(header, os.path.dirname(os.path.abspath(self.target))) + "\"", self.file)
+         output("#include \"" + pathlib.Path(os.path.relpath(header, os.path.dirname(os.path.abspath(self.target)))).as_posix() + "\"", self.file)
 
    #############################################
    def generate(self):
