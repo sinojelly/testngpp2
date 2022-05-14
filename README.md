@@ -46,6 +46,18 @@ testngpp2用例编译运行流程如下：
 - **TestCase**: TestFixture中的每个用例都是一个TestCase。
 - **SETUP,TEARDOWN**: 每个TestFixture可以有 SETUP, TEARDOWN方法，在每个用例运行前会执行SETUP,每个用例运行结束执行TEARDOWN。
 
+**注意:**
+参数化的用例，要根据打印的用例名信息，来确定过滤时使用的用例名。
+比如打印的用例信息：
+```
+[   RUN    ] ut_TestParameterized::ParameterizedTests::Test a plus b(1, 5, 6)
+[    OK    ] (0 us)
+```
+过滤时，需要使用的参数:
+```
+--filter-testcase "Test a plus b(1, 5, 6)"
+```
+
 ## testngpp2命令行
 一般直接运行编译生成的可执行文件即可。
 如果希望只运行部分测试用例，或者定制输出格式，则需要了解命令行参数。
