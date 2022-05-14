@@ -62,7 +62,7 @@ Tests [--filter-fixtures <fixture name>]...
 
 **用例选择**: 选择要运行的用例，默认运行全部用例。
 - --filter-fixtures : 后面跟TestFixture名称，可以用*通配符，可以用多个--filter-fixtures <fixture name> 指定多个Fixture。
-- --filter-testcase : 后面跟TestCase完整名称, 可以用多个--filter-testcase <full testcase name> 指定多个TestCase。
+- --filter-testcase : 后面跟TestCase完整名称, 可以用多个--filter-testcase <full testcase name> 指定多个TestCase。暂不支持指定中文用例名。
 - --filter-tags : 后面跟Tag名称，标记相应Tag的用例才会执行。
 
 **输出配置**: 配置输出参数。 
