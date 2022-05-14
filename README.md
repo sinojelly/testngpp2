@@ -77,6 +77,17 @@ Tests [--filter-fixtures <fixture name>]...
 --filter-testcase "Test a plus b(1, 5, 6)"
 ```
 
+更复杂的参数化用例名:
+打印的用例信息：
+```
+[  FAILED  ] st_test_single_video_player_fast::DataDrivenSingleVideoPlayerTestFast::Test single player play url video, and finished automatically(std::string(RESOURCE_DIR "/MP4/9_AVC_1280x720_59.940fps_AAC_128Kbps_2channels.mp4"))
+```
+过滤时，需要使用的参数:(注意其中的引号需要转义）
+```
+--filter-testcase "Test single player play url video, and finished automatically(std::string(RESOURCE_DIR \"/MP4/9_AVC_1280x720_59.940fps_AAC_128Kbps_2channels.mp4\")"
+```
+
+
 **输出配置**: 配置输出参数。 
 - -o stdout : 输出到屏幕。后面还可以带如下参数：
    - -c  : colourful
