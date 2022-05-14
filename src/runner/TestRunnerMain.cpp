@@ -24,6 +24,7 @@ struct Options{
     // Testcase Selection
     std::vector<std::string> filterFixtures{};
     std::string filterTags{"*"};
+    std::string filterTests{"*"};
 
     // Output Configuration
     std::string output="stdout";
@@ -42,7 +43,8 @@ void parse_args(int argc, char* argv[]) {
     auto cli = (
         repeatable(option("--filter-fixtures") & value("fixture name", options.filterFixtures)),
         option("--filter-tags") & value("tag", options.filterTags),
-        option("-o", "--output") & value("output", options.output) 
+        option("--filter-tests") & value("full testcase name", options.filterTests),
+        option("-o", "--output") & value("output", options.output)
            & option("-c").set(options.colourful) & option("-s").set(options.showSuite)
            & option("-f").set(options.showFixture) & option("-t").set(options.showTags) 
            & option("-v").set(options.verbose) & (option("-l") & value("output level", options.outputLevel)),
@@ -62,6 +64,13 @@ void getSpecifiedFixtures( StringList& fixtures)
    for (const auto& item : options.filterFixtures) {
        fixtures.add(item);
    }
+}
+
+////////////////////////////////////////////////////////////
+static
+void getSpecifiedTestcase( std::string& specifiedTestcase)
+{
+    specifiedTestcase = options.filterTests;
 }
 
 ////////////////////////////////////////////////////////////
@@ -114,6 +123,9 @@ int real_main(int argc, char* argv[])
    StringList fixtures;
    getSpecifiedFixtures(fixtures);
 
+   std::string specifiedTestcase;
+   getSpecifiedTestcase(specifiedTestcase);
+
    MemChecker::setGlobalOpen(useMemChecker());
    
    std::string tagsFilterOption = options.filterTags;
@@ -123,7 +135,7 @@ int real_main(int argc, char* argv[])
        suites.add(item);
    }
    return TestRunner().runTests(false, 0, suites, listeners
-                         , searchingPathsOfListeners, fixtures, tagsFilterOption);
+                         , searchingPathsOfListeners, fixtures, tagsFilterOption, specifiedTestcase);
 }
 
 int main(int argc, char* argv[])

@@ -30,7 +30,8 @@ struct TestFixtureRunnerImpl
    void run( TestFixtureContext* context
            , TestFixtureResultCollector* collector
            , const TestCaseFilter* filter
-		   , const std::string& );
+		   , const std::string&
+           , const std::string&);
 
    TestHierarchyRunner* hierarchyRunner; // Y
 };
@@ -67,7 +68,8 @@ void TestFixtureRunnerImpl::
 run( TestFixtureContext* context
    , TestFixtureResultCollector* collector
    , const TestCaseFilter* filter
-   , const std::string& suitePath)
+   , const std::string& suitePath
+   , const std::string& specifiedTestcase)
 {
    TestHierarchyHandler* handler = \
       new TestHierarchyHandler
@@ -81,7 +83,7 @@ run( TestFixtureContext* context
 
    __TESTNGPP_TRY
    {
-      hierarchyRunner->run(handler, collector);
+      hierarchyRunner->run(handler, collector, specifiedTestcase);
    }
    __TESTNGPP_CATCH(Error& e)
    {
@@ -108,9 +110,10 @@ void TestFixtureRunner::
 run( TestFixtureContext* context
    , TestFixtureResultCollector* collector
    , const TestCaseFilter* filter
-   , const std::string& suitePath)
+   , const std::string& suitePath
+   , const std::string& specifiedTestcase)
 {
-   return This->run(context, collector, filter, suitePath);
+   return This->run(context, collector, filter, suitePath, specifiedTestcase);
 }
 
 /////////////////////////////////////////////////////////////////

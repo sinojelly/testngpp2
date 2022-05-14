@@ -20,7 +20,8 @@ struct SimpleTestHierarchyRunnerImpl
    {}
 
 	void run(TestHierarchyHandler* hierarchy
-      , TestFixtureResultCollector* resultCollector);
+      , TestFixtureResultCollector* resultCollector
+      , const std::string& specifiedTestcase);
 
    TestCaseRunner* caseRunner; // X
 };
@@ -28,14 +29,17 @@ struct SimpleTestHierarchyRunnerImpl
 ///////////////////////////////////////////////////////
 void
 SimpleTestHierarchyRunnerImpl::run(TestHierarchyHandler* hierarchy
-        , TestFixtureResultCollector* resultCollector)
+        , TestFixtureResultCollector* resultCollector
+        , const std::string& specifiedTestcase)
 {
    for(unsigned int i = 0; i < hierarchy->numberOfTestCasesInSched(); i++)
    {
       TestHierarchyHandler::ValueType test = hierarchy->getTestCase(i);
       TestCase* testcase = const_cast<TestCase*>(test.first);
-      bool result = caseRunner->run(testcase, resultCollector, test.second);
-      hierarchy->testDone(testcase, result);
+      if (specifiedTestcase == "*" || specifiedTestcase == testcase->getName()) { // run all tests, or specified test
+          bool result = caseRunner->run(testcase, resultCollector, test.second);
+          hierarchy->testDone(testcase, result);
+      }
    }
 }
 
@@ -55,9 +59,10 @@ SimpleTestHierarchyRunner::~SimpleTestHierarchyRunner()
 ///////////////////////////////////////////////////////
 void
 SimpleTestHierarchyRunner::run(TestHierarchyHandler* hierarchy
-      , TestFixtureResultCollector* resultCollector)
+      , TestFixtureResultCollector* resultCollector
+      , const std::string& specifiedTestcase)
 {
-   This->run(hierarchy, resultCollector);
+   This->run(hierarchy, resultCollector, specifiedTestcase);
 }
 
 ///////////////////////////////////////////////////////

@@ -25,9 +25,9 @@ struct TestSuiteRunnerImpl
    {
    }
 
-   void runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter);
+   void runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase);
 
-	void run(TestSuiteContext* suite, const TestCaseFilter* filter);
+	void run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase);
 
    TestFixtureRunner* fixtureRunner;     // X
    TestResultCollector* resultCollector; // X
@@ -50,24 +50,24 @@ TestSuiteRunner::~TestSuiteRunner()
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::
-runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter)
+runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase)
 {
    for(unsigned int i=0; i<suite->numberOfFixtures(); i++)
    {
       TestFixtureContext* fixture = suite->getFixture(i);
 
-	  fixtureRunner->run(fixture, resultCollector, filter, suite->getSuitePath());
+	  fixtureRunner->run(fixture, resultCollector, filter, suite->getSuitePath(), specifiedTestcase);
    }
 }
 
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::
-run(TestSuiteContext* suite, const TestCaseFilter* filter)
+run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase)
 {
     try {
         resultCollector->startTestSuite(suite->getSuite());
-        runAllFixtures(suite, filter);
+        runAllFixtures(suite, filter, specifiedTestcase);
         resultCollector->endTestSuite(suite->getSuite());
     } catch (...) { // Any exception should finish the suite, or else next suite can not run.
         resultCollector->finishExceptionTestSuite();
@@ -78,9 +78,9 @@ run(TestSuiteContext* suite, const TestCaseFilter* filter)
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunner::
-run(TestSuiteContext* suite, const TestCaseFilter* filter)
+run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase)
 {
-   This->run(suite, filter);
+   This->run(suite, filter, specifiedTestcase);
 }
 
 /////////////////////////////////////////////////////////////////

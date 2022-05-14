@@ -46,19 +46,20 @@ struct TestRunnerImpl
       , unsigned int maxConcurrent);
 
    void runTestSuite
-      (TestSuiteContext* suite, const TestFilter* filter);
+      (TestSuiteContext* suite, const TestFilter* filter, const std::string& specifiedTestcase);
 
    void runAllTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
-      , const TestFilter* filter);
+      , const TestFilter* filter
+      , const std::string& specifiedTestcase);
 
    void loadListeners
       ( const StringList& searchingPaths
       , const StringList& listeners);
 
    void runAllSuites
-      ( TestRunnerContext* context, const TestFilter* filter);
+      ( TestRunnerContext* context, const TestFilter* filter, const std::string& specifiedTestcase);
 
    TestRunnerContext* 
    loadSuites
@@ -69,7 +70,8 @@ struct TestRunnerImpl
    void runTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
-      , const TestFilter* filter);
+      , const TestFilter* filter
+      , const std::string& specifiedTestcase);
 };
 
 ///////////////////////////////////////////////////////
@@ -142,11 +144,11 @@ createSuiteRunner(bool useSandbox, unsigned int maxConcurrent)
 ///////////////////////////////////////////////////////
 void TestRunnerImpl::
 runTestSuite
-      (TestSuiteContext* suite, const TestFilter* filter)
+      (TestSuiteContext* suite, const TestFilter* filter, const std::string& specifiedTestcase)
 {
    __TESTNGPP_TRY
    {
-     suiteRunner->run(suite, filter);
+     suiteRunner->run(suite, filter, specifiedTestcase);
    }
    __TESTNGPP_CATCH(Error& e)
    {
@@ -165,11 +167,11 @@ runTestSuite
 void
 TestRunnerImpl::
 runAllSuites
-      ( TestRunnerContext* context, const TestFilter* filter)
+      ( TestRunnerContext* context, const TestFilter* filter, const std::string& specifiedTestcase)
 {
    for(unsigned int i=0; i<context->numberOfSuites(); i++)
    {
-      runTestSuite(context->getSuite(i), filter);
+      runTestSuite(context->getSuite(i), filter, specifiedTestcase);
    }
 }
 ///////////////////////////////////////////////////////
@@ -178,7 +180,8 @@ TestRunnerImpl::
 runAllTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
-      , const TestFilter* filter)
+      , const TestFilter* filter
+      , const std::string& specifiedTestcase)
 {
    TestResultCollector* collector = \
       resultManager->getResultCollector();
@@ -196,7 +199,7 @@ runAllTests
       }
 
       collector->startTagsFiltering(taggableFilter);
-      runAllSuites(context, filter);
+      runAllSuites(context, filter, specifiedTestcase);
       collector->endTagsFiltering(taggableFilter);
    }
 
@@ -209,14 +212,15 @@ TestRunnerImpl::
 runTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
-      , const TestFilter* filter)
+      , const TestFilter* filter
+      , const std::string& specifiedTestcase)
 {
    resultManager->startTest();
 
    StupidTimer timer;
    timer.start();
 
-   runAllTests(suites, tagsFilters, filter);
+   runAllTests(suites, tagsFilters, filter, specifiedTestcase);
 
    timeval tv = timer.stop();
    resultManager->endTest(tv.tv_sec, tv.tv_usec);
@@ -247,7 +251,8 @@ TestRunner::runTests( bool useSandbox
                     , const StringList& listenerNames
                     , const StringList& searchingPaths
                     , const StringList& fixtures
-                    , const std::string& tagsFilterOption)
+                    , const std::string& tagsFilterOption
+                    , const std::string& specifiedTestcase)
 {
    This->createSuiteRunner(useSandbox, maxConcurrent);
    This->loadListeners(searchingPaths, listenerNames);
@@ -257,7 +262,7 @@ TestRunner::runTests( bool useSandbox
    __TESTNGPP_TRY
    {
       TagsFilters* tagsFilter = TagsParser::parse(tagsFilterOption);
-      This->runTests(suitePaths, tagsFilter, filter);
+      This->runTests(suitePaths, tagsFilter, filter, specifiedTestcase);
       delete tagsFilter;
    }
    __TESTNGPP_CATCH(Error& e)

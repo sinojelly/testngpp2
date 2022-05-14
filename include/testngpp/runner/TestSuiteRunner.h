@@ -22,7 +22,8 @@ struct TestSuiteRunner
 	~TestSuiteRunner();
 
    void run(TestSuiteContext* suite
-            , const TestCaseFilter* filter);
+            , const TestCaseFilter* filter
+            , const std::string& specifiedTestcase);
 private:
 	TestSuiteRunnerImpl* This;
 

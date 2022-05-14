@@ -23,7 +23,8 @@ public:
                , const StringList& listenerNames
                , const StringList& searchingPathsOfListeners
                , const StringList& fixtures
-               , const std::string& tagsFilterOption);
+               , const std::string& tagsFilterOption
+               , const std::string& specifiedTestcase);
 
 private:
    TestRunnerImpl * This;

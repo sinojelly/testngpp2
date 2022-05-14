@@ -22,7 +22,8 @@ struct TestFixtureRunner
    void run ( TestFixtureContext *
             , TestFixtureResultCollector*
             , const TestCaseFilter*
-			, const std::string&);
+            , const std::string&
+            , const std::string&);
 
 private:
    TestFixtureRunnerImpl* This;

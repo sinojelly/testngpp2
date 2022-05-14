@@ -20,7 +20,8 @@ struct SimpleTestHierarchyRunner : public TestHierarchyRunner
 	~SimpleTestHierarchyRunner();
 
 	void run( TestHierarchyHandler* 
-           , TestFixtureResultCollector*);
+           , TestFixtureResultCollector*
+           , const std::string&);
 
 private:
    SimpleTestHierarchyRunnerImpl * This;
