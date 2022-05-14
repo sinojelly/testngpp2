@@ -14,7 +14,7 @@ struct TestHierarchyRunner
 	virtual void run 
 		( TestHierarchyHandler*
         , TestFixtureResultCollector*
-        , const std::string&) = 0;
+        , const StringList&) = 0;
 
    virtual ~TestHierarchyRunner() {}
 };

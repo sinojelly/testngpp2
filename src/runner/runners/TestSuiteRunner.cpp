@@ -9,6 +9,7 @@
 #include <testngpp/runner/TestFilter.h>
 #include <testngpp/runner/TestFixtureRunner.h>
 #include <testngpp/runner/TestSuiteContext.h>
+#include <testngpp/utils/StringList.h>
 
 TESTNGPP_NS_START
 
@@ -25,9 +26,9 @@ struct TestSuiteRunnerImpl
    {
    }
 
-   void runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase);
+   void runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter, const StringList& specifiedTestcases);
 
-	void run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase);
+	void run(TestSuiteContext* suite, const TestCaseFilter* filter, const StringList& specifiedTestcases);
 
    TestFixtureRunner* fixtureRunner;     // X
    TestResultCollector* resultCollector; // X
@@ -50,24 +51,24 @@ TestSuiteRunner::~TestSuiteRunner()
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::
-runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase)
+runAllFixtures(TestSuiteContext* suite, const TestCaseFilter* filter, const StringList& specifiedTestcases)
 {
    for(unsigned int i=0; i<suite->numberOfFixtures(); i++)
    {
       TestFixtureContext* fixture = suite->getFixture(i);
 
-	  fixtureRunner->run(fixture, resultCollector, filter, suite->getSuitePath(), specifiedTestcase);
+	  fixtureRunner->run(fixture, resultCollector, filter, suite->getSuitePath(), specifiedTestcases);
    }
 }
 
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::
-run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase)
+run(TestSuiteContext* suite, const TestCaseFilter* filter, const StringList& specifiedTestcases)
 {
     try {
         resultCollector->startTestSuite(suite->getSuite());
-        runAllFixtures(suite, filter, specifiedTestcase);
+        runAllFixtures(suite, filter, specifiedTestcases);
         resultCollector->endTestSuite(suite->getSuite());
     } catch (...) { // Any exception should finish the suite, or else next suite can not run.
         resultCollector->finishExceptionTestSuite();
@@ -78,9 +79,9 @@ run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& sp
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunner::
-run(TestSuiteContext* suite, const TestCaseFilter* filter, const std::string& specifiedTestcase)
+run(TestSuiteContext* suite, const TestCaseFilter* filter, const StringList& specifiedTestcases)
 {
-   This->run(suite, filter, specifiedTestcase);
+   This->run(suite, filter, specifiedTestcases);
 }
 
 /////////////////////////////////////////////////////////////////

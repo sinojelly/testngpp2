@@ -25,6 +25,16 @@ struct StringList
    size_t size() const
    { return elems.size(); }
 
+   bool contains(const std::string& elem) const
+   {
+       for (const auto& item : elems) {
+           if (item == elem) {
+               return true;
+           }
+       }
+       return false;
+   }
+
 private:
    Type elems;
 };

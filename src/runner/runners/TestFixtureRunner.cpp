@@ -2,6 +2,7 @@
 #include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/utils/InternalError.h>
+#include <testngpp/utils/StringList.h>
 
 #include <testngpp/internal/Error.h>
 
@@ -31,7 +32,7 @@ struct TestFixtureRunnerImpl
            , TestFixtureResultCollector* collector
            , const TestCaseFilter* filter
 		   , const std::string&
-           , const std::string&);
+           , const StringList&);
 
    TestHierarchyRunner* hierarchyRunner; // Y
 };
@@ -69,7 +70,7 @@ run( TestFixtureContext* context
    , TestFixtureResultCollector* collector
    , const TestCaseFilter* filter
    , const std::string& suitePath
-   , const std::string& specifiedTestcase)
+   , const StringList& specifiedTestcases)
 {
    TestHierarchyHandler* handler = \
       new TestHierarchyHandler
@@ -83,7 +84,7 @@ run( TestFixtureContext* context
 
    __TESTNGPP_TRY
    {
-      hierarchyRunner->run(handler, collector, specifiedTestcase);
+      hierarchyRunner->run(handler, collector, specifiedTestcases);
    }
    __TESTNGPP_CATCH(Error& e)
    {
@@ -111,9 +112,9 @@ run( TestFixtureContext* context
    , TestFixtureResultCollector* collector
    , const TestCaseFilter* filter
    , const std::string& suitePath
-   , const std::string& specifiedTestcase)
+   , const StringList& specifiedTestcases)
 {
-   return This->run(context, collector, filter, suitePath, specifiedTestcase);
+   return This->run(context, collector, filter, suitePath, specifiedTestcases);
 }
 
 /////////////////////////////////////////////////////////////////

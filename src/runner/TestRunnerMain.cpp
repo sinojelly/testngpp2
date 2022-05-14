@@ -23,8 +23,8 @@ USING_TESTNGPP_NS
 struct Options{
     // Testcase Selection
     std::vector<std::string> filterFixtures{};
+    std::vector<std::string> filterTests{};
     std::string filterTags{"*"};
-    std::string filterTests{"*"};
 
     // Output Configuration
     std::string output="stdout";
@@ -42,8 +42,8 @@ struct Options{
 void parse_args(int argc, char* argv[]) {
     auto cli = (
         repeatable(option("--filter-fixtures") & value("fixture name", options.filterFixtures)),
+        repeatable(option("--filter-testcase") & value("full testcase name", options.filterTests)),
         option("--filter-tags") & value("tag", options.filterTags),
-        option("--filter-tests") & value("full testcase name", options.filterTests),
         option("-o", "--output") & value("output", options.output)
            & option("-c").set(options.colourful) & option("-s").set(options.showSuite)
            & option("-f").set(options.showFixture) & option("-t").set(options.showTags) 
@@ -68,9 +68,11 @@ void getSpecifiedFixtures( StringList& fixtures)
 
 ////////////////////////////////////////////////////////////
 static
-void getSpecifiedTestcase( std::string& specifiedTestcase)
+void getSpecifiedTestcases( StringList& specifiedTestcases)
 {
-    specifiedTestcase = options.filterTests;
+    for (const auto& item : options.filterTests) {
+        specifiedTestcases.add(item);
+    }
 }
 
 ////////////////////////////////////////////////////////////
@@ -123,8 +125,8 @@ int real_main(int argc, char* argv[])
    StringList fixtures;
    getSpecifiedFixtures(fixtures);
 
-   std::string specifiedTestcase;
-   getSpecifiedTestcase(specifiedTestcase);
+   StringList specifiedTestcases;
+   getSpecifiedTestcases(specifiedTestcases);
 
    MemChecker::setGlobalOpen(useMemChecker());
    
@@ -135,7 +137,7 @@ int real_main(int argc, char* argv[])
        suites.add(item);
    }
    return TestRunner().runTests(false, 0, suites, listeners
-                         , searchingPathsOfListeners, fixtures, tagsFilterOption, specifiedTestcase);
+                         , searchingPathsOfListeners, fixtures, tagsFilterOption, specifiedTestcases);
 }
 
 int main(int argc, char* argv[])

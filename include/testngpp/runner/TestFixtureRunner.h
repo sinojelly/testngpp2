@@ -5,6 +5,7 @@
 #include <string>
 
 #include <testngpp/testngpp.h>
+#include <testngpp/utils/StringList.h>
 
 TESTNGPP_NS_START
 
@@ -23,7 +24,7 @@ struct TestFixtureRunner
             , TestFixtureResultCollector*
             , const TestCaseFilter*
             , const std::string&
-            , const std::string&);
+            , const StringList&);
 
 private:
    TestFixtureRunnerImpl* This;

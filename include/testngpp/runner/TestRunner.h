@@ -24,7 +24,7 @@ public:
                , const StringList& searchingPathsOfListeners
                , const StringList& fixtures
                , const std::string& tagsFilterOption
-               , const std::string& specifiedTestcase);
+               , const StringList& specifiedTestcases);
 
 private:
    TestRunnerImpl * This;

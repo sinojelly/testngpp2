@@ -46,20 +46,20 @@ struct TestRunnerImpl
       , unsigned int maxConcurrent);
 
    void runTestSuite
-      (TestSuiteContext* suite, const TestFilter* filter, const std::string& specifiedTestcase);
+      (TestSuiteContext* suite, const TestFilter* filter, const StringList& specifiedTestcases);
 
    void runAllTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
       , const TestFilter* filter
-      , const std::string& specifiedTestcase);
+      , const StringList& specifiedTestcases);
 
    void loadListeners
       ( const StringList& searchingPaths
       , const StringList& listeners);
 
    void runAllSuites
-      ( TestRunnerContext* context, const TestFilter* filter, const std::string& specifiedTestcase);
+      ( TestRunnerContext* context, const TestFilter* filter, const StringList& specifiedTestcases);
 
    TestRunnerContext* 
    loadSuites
@@ -71,7 +71,7 @@ struct TestRunnerImpl
       ( const StringList& suites
       , TagsFilters* tagsFilters
       , const TestFilter* filter
-      , const std::string& specifiedTestcase);
+      , const StringList& specifiedTestcases);
 };
 
 ///////////////////////////////////////////////////////
@@ -144,11 +144,11 @@ createSuiteRunner(bool useSandbox, unsigned int maxConcurrent)
 ///////////////////////////////////////////////////////
 void TestRunnerImpl::
 runTestSuite
-      (TestSuiteContext* suite, const TestFilter* filter, const std::string& specifiedTestcase)
+      (TestSuiteContext* suite, const TestFilter* filter, const StringList& specifiedTestcases)
 {
    __TESTNGPP_TRY
    {
-     suiteRunner->run(suite, filter, specifiedTestcase);
+     suiteRunner->run(suite, filter, specifiedTestcases);
    }
    __TESTNGPP_CATCH(Error& e)
    {
@@ -167,11 +167,11 @@ runTestSuite
 void
 TestRunnerImpl::
 runAllSuites
-      ( TestRunnerContext* context, const TestFilter* filter, const std::string& specifiedTestcase)
+      ( TestRunnerContext* context, const TestFilter* filter, const StringList& specifiedTestcases)
 {
    for(unsigned int i=0; i<context->numberOfSuites(); i++)
    {
-      runTestSuite(context->getSuite(i), filter, specifiedTestcase);
+      runTestSuite(context->getSuite(i), filter, specifiedTestcases);
    }
 }
 ///////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ runAllTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
       , const TestFilter* filter
-      , const std::string& specifiedTestcase)
+      , const StringList& specifiedTestcases)
 {
    TestResultCollector* collector = \
       resultManager->getResultCollector();
@@ -199,7 +199,7 @@ runAllTests
       }
 
       collector->startTagsFiltering(taggableFilter);
-      runAllSuites(context, filter, specifiedTestcase);
+      runAllSuites(context, filter, specifiedTestcases);
       collector->endTagsFiltering(taggableFilter);
    }
 
@@ -213,14 +213,14 @@ runTests
       ( const StringList& suites
       , TagsFilters* tagsFilters
       , const TestFilter* filter
-      , const std::string& specifiedTestcase)
+      , const StringList& specifiedTestcases)
 {
    resultManager->startTest();
 
    StupidTimer timer;
    timer.start();
 
-   runAllTests(suites, tagsFilters, filter, specifiedTestcase);
+   runAllTests(suites, tagsFilters, filter, specifiedTestcases);
 
    timeval tv = timer.stop();
    resultManager->endTest(tv.tv_sec, tv.tv_usec);
@@ -252,7 +252,7 @@ TestRunner::runTests( bool useSandbox
                     , const StringList& searchingPaths
                     , const StringList& fixtures
                     , const std::string& tagsFilterOption
-                    , const std::string& specifiedTestcase)
+                    , const StringList& specifiedTestcases)
 {
    This->createSuiteRunner(useSandbox, maxConcurrent);
    This->loadListeners(searchingPaths, listenerNames);
@@ -262,7 +262,7 @@ TestRunner::runTests( bool useSandbox
    __TESTNGPP_TRY
    {
       TagsFilters* tagsFilter = TagsParser::parse(tagsFilterOption);
-      This->runTests(suitePaths, tagsFilter, filter, specifiedTestcase);
+      This->runTests(suitePaths, tagsFilter, filter, specifiedTestcases);
       delete tagsFilter;
    }
    __TESTNGPP_CATCH(Error& e)

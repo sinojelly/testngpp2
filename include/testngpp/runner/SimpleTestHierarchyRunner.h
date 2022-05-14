@@ -21,7 +21,7 @@ struct SimpleTestHierarchyRunner : public TestHierarchyRunner
 
 	void run( TestHierarchyHandler* 
            , TestFixtureResultCollector*
-           , const std::string&);
+           , const StringList&);
 
 private:
    SimpleTestHierarchyRunnerImpl * This;

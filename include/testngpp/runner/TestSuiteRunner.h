@@ -5,6 +5,7 @@
 #include <string>
 
 #include <testngpp/testngpp.h>
+#include <testngpp/utils/StringList.h>
 
 TESTNGPP_NS_START
 
@@ -23,7 +24,7 @@ struct TestSuiteRunner
 
    void run(TestSuiteContext* suite
             , const TestCaseFilter* filter
-            , const std::string& specifiedTestcase);
+            , const StringList& specifiedTestcases);
 private:
 	TestSuiteRunnerImpl* This;
 
