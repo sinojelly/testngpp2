@@ -46,18 +46,6 @@ testngpp2用例编译运行流程如下：
 - **TestCase**: TestFixture中的每个用例都是一个TestCase。
 - **SETUP,TEARDOWN**: 每个TestFixture可以有 SETUP, TEARDOWN方法，在每个用例运行前会执行SETUP,每个用例运行结束执行TEARDOWN。
 
-**注意:**
-参数化的用例，要根据打印的用例名信息，来确定过滤时使用的用例名。
-比如打印的用例信息：
-```
-[   RUN    ] ut_TestParameterized::ParameterizedTests::Test a plus b(1, 5, 6)
-[    OK    ] (0 us)
-```
-过滤时，需要使用的参数:
-```
---filter-testcase "Test a plus b(1, 5, 6)"
-```
-
 ## testngpp2命令行
 一般直接运行编译生成的可执行文件即可。
 如果希望只运行部分测试用例，或者定制输出格式，则需要了解命令行参数。
@@ -76,6 +64,18 @@ Tests [--filter-fixtures <fixture name>]...
 - --filter-fixtures : 后面跟TestFixture名称，可以用*通配符，可以用多个--filter-fixtures <fixture name> 指定多个Fixture。
 - --filter-testcase : 后面跟TestCase完整名称, 可以用多个--filter-testcase <full testcase name> 指定多个TestCase。暂不支持指定中文用例名。
 - --filter-tags : 后面跟Tag名称，标记相应Tag的用例才会执行。
+
+**注意:**
+参数化的用例，要根据打印的用例名信息，来确定过滤时使用的用例名。
+比如打印的用例信息：
+```
+[   RUN    ] ut_TestParameterized::ParameterizedTests::Test a plus b(1, 5, 6)
+[    OK    ] (0 us)
+```
+过滤时，需要使用的参数:
+```
+--filter-testcase "Test a plus b(1, 5, 6)"
+```
 
 **输出配置**: 配置输出参数。 
 - -o stdout : 输出到屏幕。后面还可以带如下参数：
