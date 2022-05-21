@@ -259,5 +259,39 @@ FIXTURE(TestXXX)
 };
 ```
 
+#### 3. DataProvider各个参数的含义。
+如下面代码，的参数：
+- mydata : data provider name
+- 3 : 一个DATA_GROUP包含的参数个数，这里是3.
+```
+	DATA_PROVIDER( mydata, 3
+		, DATA_GROUP(1, 4, 5) 
+		, DATA_GROUP(101, 503, 604));
+```
+
+#### 4. 每个用例执行前的处理放在 SETUP() 中，每个用例执行后的处理放在TEARDOWN()中。
+```
+// @fixture(tags=debuging)
+FIXTURE(DataDrivenSingleAudioRecorderTestFast)
+{
+    DATA_PROVIDER(pcmSources, 4,
+    DATA_GROUP(AudioRecordSource(std::string(RESOURCE_DIR "/PCM/44100_2_02.pcm"), 44100, 2, 320000)));
+
+    SETUP()
+    {
+        OHOS::Media::OSAL::FileSystem::RemoveFilesInDir(TestRecorder::GetOutputDir());
+    }
+
+    TEARDOWN()
+    {
+    }
+
+    // @test(data="pcmSources", tags=fast)
+    PTEST((AudioRecordSource recordSource), Test single audio recorder)
+    {
+    }
+ };
+```
+
 Email to the current maintainers may be sent to
 <sinojelly@163.com>.
